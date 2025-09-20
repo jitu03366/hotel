@@ -228,4 +228,71 @@ const verifyPayment = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, verifyPayment };
+// POST /api/payment/cod
+// Handle Cash on Delivery payments
+const handleCODPayment = async (req, res) => {
+  try {
+    const { bookingId, paymentMethod, paymentStatus } = req.body;
+
+    if (!bookingId) {
+      return res.status(400).json({
+        success: false,
+        message: "Booking ID is required for COD payment",
+      });
+    }
+
+    // Find the booking
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found",
+      });
+    }
+
+    // Update booking with COD payment status
+    const updatedBooking = await Booking.findByIdAndUpdate(
+      bookingId,
+      {
+        paymentStatus: "pending",
+        paymentMethod: "cod",
+      },
+      { new: true }
+    )
+      .populate("userId")
+      .populate("bookingInfo.roomId");
+
+    // Create a payment record for COD
+    const payment = await Payment.create({
+      bookingId: booking._id,
+      userId: booking.userId || null,
+      amount: Math.round(Number(booking.totalAmount) * 100), // Convert to paise
+      currency: "INR",
+      status: "pending",
+      paymentMethod: "cod",
+      notes: {
+        bookingId: booking._id.toString(),
+        userEmail: booking.userEmail,
+        paymentMethod: "cod",
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "COD booking confirmed successfully",
+      data: {
+        booking: updatedBooking,
+        payment: payment,
+        bookingId: updatedBooking._id,
+      },
+    });
+  } catch (error) {
+    console.error("COD Payment Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to process COD payment",
+    });
+  }
+};
+
+module.exports = { createOrder, verifyPayment, handleCODPayment };

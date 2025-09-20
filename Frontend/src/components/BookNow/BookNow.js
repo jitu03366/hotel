@@ -43,9 +43,37 @@ function BookNow() {
   const fourthStage = useRef();
 
   const progressBar = useRef();
+  const checkInRef = useRef();
+  const checkOutRef = useRef();
 
   const [bookMsg, setBookMsg] = useState("");
   const [bookingLoading, setBookingLoading] = useState(false);
+  const [roomsLoading, setRoomsLoading] = useState(true);
+
+  // Load available rooms when component mounts
+  useEffect(() => {
+    const loadRooms = async () => {
+      try {
+        setRoomsLoading(true);
+        const response = await axios.get("/api/rooms/available");
+        if (response.data && response.data.success) {
+          setAllRooms(response.data.data);
+        } else {
+          setBookMsg(
+            "Failed to load available rooms. Please refresh the page."
+          );
+        }
+      } catch (error) {
+        setBookMsg(
+          "Error loading rooms. Please check your connection and try again."
+        );
+      } finally {
+        setRoomsLoading(false);
+      }
+    };
+
+    loadRooms();
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -74,8 +102,8 @@ function BookNow() {
 
   useEffect(() => {
     if (progressBar.current) {
-      progressBar.current.style = "width: 50%";
-      progressBar.current.innerText = "50%";
+      progressBar.current.style = "width: 25%";
+      progressBar.current.innerText = "25%";
     }
 
     async function getRooms() {
@@ -112,8 +140,8 @@ function BookNow() {
       }
 
       // Validate phone number format if provided
-      if (phone && !/^09\d{9}$/.test(phone)) {
-        return alert("Please enter a valid phone number (09XXXXXXXX)");
+      if (!phone || !/^\d{10}$/.test(phone)) {
+        return alert("Please enter a valid 10-digit phone number");
       }
 
       // compute nights
@@ -256,8 +284,8 @@ function BookNow() {
       fourthStage.current.classList.add("d-none");
 
       if (progressBar.current) {
-        progressBar.current.style = "width: 50%";
-        progressBar.current.innerText = "50%";
+        progressBar.current.style = "width: 25%";
+        progressBar.current.innerText = "25%";
       }
     }
 
@@ -268,8 +296,8 @@ function BookNow() {
       fourthStage.current.classList.add("d-none");
 
       if (progressBar.current) {
-        progressBar.current.style = "width: 100%";
-        progressBar.current.innerText = "100%";
+        progressBar.current.style = "width: 50%";
+        progressBar.current.innerText = "50%";
       }
     }
 
@@ -317,35 +345,38 @@ function BookNow() {
     history.push("/check-rooms-and-rates");
   }
 
-  const checkInRef = useRef();
-  const checkOutRef = useRef();
-
   useEffect(() => {
     var today = new Date().toISOString().split("T")[0];
-    checkInRef.current.setAttribute("min", today);
+    if (checkInRef.current) {
+      checkInRef.current.setAttribute("min", today);
+    }
 
-    if (checkIn === undefined) {
-      checkOutRef.current.disabled = true;
+    if (checkIn === undefined || checkIn === "") {
+      if (checkOutRef.current) {
+        checkOutRef.current.disabled = true;
+      }
     } else {
-      checkOutRef.current.disabled = false;
-      checkOutRef.current.setAttribute("min", checkIn);
+      if (checkOutRef.current) {
+        checkOutRef.current.disabled = false;
+        checkOutRef.current.setAttribute("min", checkIn);
+      }
     }
   }, [checkIn]);
 
   return (
     <div className="bookNow mt-5 pt-5 pb-5">
-      <div className="container">
+      <div className="container bookNow__content">
         <h1 className="text-center bookNow__title">Book Now</h1>
         <div className="progress">
           <div
             className="progress-bar bg-success"
             role="progressbar"
-            aria-valuenow="0"
+            aria-valuenow="25"
             aria-valuemin="0"
             aria-valuemax="100"
             ref={progressBar}
           >
-            0%
+            25%
           </div>
         </div>
         <form className="mt-5" onSubmit={(e) => handleSubmit(e)}>
@@ -373,6 +404,13 @@ function BookNow() {
                   onChange={(e) => {
                     setCheckIn(e.target.value);
                   }}
+                  onClick={(e) => {
+                    // Force date picker to open on mobile/touch devices
+                    if (e.target.showPicker) {
+                      e.target.showPicker();
+                    }
+                  }}
+                  min={new Date().toISOString().split("T")[0]}
                 />
               </div>
               <div className="col-md-3">
@@ -388,6 +426,14 @@ function BookNow() {
                   onChange={(e) => {
                     setCheckOut(e.target.value);
                   }}
+                  onClick={(e) => {
+                    // Force date picker to open on mobile/touch devices
+                    if (e.target.showPicker) {
+                      e.target.showPicker();
+                    }
+                  }}
+                  min={checkIn || new Date().toISOString().split("T")[0]}
+                  disabled={!checkIn}
                 />
               </div>
             </div>
@@ -471,8 +517,16 @@ function BookNow() {
                     );
                     setRoomType(found ? found.type : "");
                   }}
+                  disabled={roomsLoading}
                 >
-                  <option value="">Select a room</option>
+                  <option value="">
+                    {roomsLoading ? "Loading rooms..." : "Select a room"}
+                  </option>
+                  {!roomsLoading && allRooms.length === 0 && (
+                    <option value="" disabled>
+                      No rooms available
+                    </option>
+                  )}
                   {allRooms.map((room) => (
                     <option value={room._id} key={room._id}>
                       {room.name} ({room.type}) - ${room.rentPerDay}/night
@@ -489,15 +543,23 @@ function BookNow() {
                 </button>
               </div>
             </div>
-            <button onClick={() => changeStage(2, 1)} className="button mt-4">
-              Previous
-            </button>
-            <button onClick={() => changeStage(2, 3)} className="button mt-4">
-              Next
-            </button>
-            <button onClick={checkRoomsAndRates} className="button mt-4">
-              Check Rooms and Rates
-            </button>
+            <div className="row mt-3 w-50">
+              <button
+                onClick={() => changeStage(2, 1)}
+                className="button mt-4 "
+              >
+                Previous
+              </button>
+              <button
+                onClick={() => changeStage(2, 3)}
+                className="button mt-4 ml-4"
+              >
+                Next
+              </button>
+              <button onClick={checkRoomsAndRates} className="button mt-4 ml-4">
+                Check Rooms and Rates
+              </button>
+            </div>
           </div>
 
           {/* --------------------------------Third Stage---------------------------------- */}
