@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import ImageUpload from "../../../components/ImageUpload/ImageUpload";
 
 import axios from "../../../axios";
 
@@ -18,7 +19,7 @@ function CreateRoom() {
     rentPerDay: "",
     type: "",
     maxCount: "",
-    images: "",
+    images: [],
     description: "",
     amenities: "",
   });
@@ -77,6 +78,20 @@ function CreateRoom() {
     }
   };
 
+  const handleImagesChange = (newImages) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: newImages,
+    }));
+    // Clear image error when images change
+    if (errors.images) {
+      setErrors((prev) => ({
+        ...prev,
+        images: "",
+      }));
+    }
+  };
+
   const validateForm = () => {
     const newErrors = {};
 
@@ -117,17 +132,8 @@ function CreateRoom() {
       newErrors.description = "Description cannot exceed 1000 characters";
     }
 
-    if (formData.images.trim()) {
-      const imageUrls = formData.images.split(",").map((url) => url.trim());
-      const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
-
-      for (let i = 0; i < imageUrls.length; i++) {
-        if (!urlRegex.test(imageUrls[i])) {
-          newErrors.images =
-            "Please provide valid image URLs separated by commas";
-          break;
-        }
-      }
+    if (formData.images.length > 10) {
+      newErrors.images = "Maximum 10 images allowed";
     }
 
     setErrors(newErrors);
@@ -150,9 +156,7 @@ function CreateRoom() {
       rentPerDay: parseFloat(formData.rentPerDay),
       type: formData.type,
       maxCount: parseInt(formData.maxCount),
-      images: formData.images.trim()
-        ? formData.images.split(",").map((url) => url.trim())
-        : [],
+      images: formData.images,
       description: formData.description.trim(),
       amenities: formData.amenities.trim()
         ? formData.amenities.split(",").map((item) => item.trim())
@@ -351,25 +355,21 @@ function CreateRoom() {
 
                 <div className="col-md-6">
                   <div className="mb-3">
-                    <label htmlFor="images" className="form-label">
-                      Image URLs
+                    <label className="form-label">
+                      Room Images
                     </label>
-                    <textarea
-                      id="images"
-                      name="images"
-                      className={`form-control ${
-                        errors.images ? "is-invalid" : ""
-                      }`}
-                      placeholder="Enter image URLs separated by commas..."
-                      rows="3"
-                      value={formData.images}
-                      onChange={handleInputChange}
+                    <ImageUpload
+                      images={formData.images}
+                      onImagesChange={handleImagesChange}
+                      maxImages={10}
+                      disabled={isSubmitting}
+                      className={errors.images ? "error" : ""}
                     />
                     {errors.images && (
-                      <div className="invalid-feedback">{errors.images}</div>
+                      <div className="invalid-feedback d-block">{errors.images}</div>
                     )}
                     <div className="form-text">
-                      Enter valid image URLs separated by commas (optional)
+                      Upload up to 10 images for your room (optional)
                     </div>
                   </div>
 
