@@ -1,11 +1,12 @@
+/* Showcase.css - Enhanced Luxury Style */
 .showcase {
   width: 100%;
   min-height: 100vh;
   background: linear-gradient(
       135deg,
-      rgba(0, 0, 0, 0.4),
-      rgba(102, 126, 234, 0.6),
-      rgba(118, 75, 162, 0.4)
+      rgba(0, 0, 0, 0.5),
+      rgba(73, 40, 116, 0.7),
+      rgba(25, 18, 84, 0.8)
     ),
     url(../../style/img/showcase.jpg);
   background-position: center;
@@ -27,9 +28,9 @@
   bottom: 0;
   background: radial-gradient(
     ellipse at center,
-    rgba(102, 126, 234, 0.1) 0%,
-    rgba(118, 75, 162, 0.2) 50%,
-    rgba(0, 0, 0, 0.3) 100%
+    rgba(102, 126, 234, 0.15) 0%,
+    rgba(118, 75, 162, 0.25) 50%,
+    rgba(0, 0, 0, 0.4) 100%
   );
   z-index: 1;
 }
@@ -41,8 +42,8 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
-  animation: shimmer 8s ease-in-out infinite;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.08) 50%, transparent 70%);
+  animation: shimmer 10s ease-in-out infinite;
   z-index: 1;
 }
 
@@ -64,69 +65,158 @@
   padding: 0 2rem;
 }
 
+.showcase__premium-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+  padding: 0.5rem 1.5rem;
+  border-radius: 30px;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.showcase__badge-text {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #000;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
 .showcase__hero {
-  font-size: clamp(3rem, 8vw, 5rem);
+  font-size: clamp(3.5rem, 8vw, 5.5rem);
   font-family: "Playfair Display", serif;
   font-weight: 700;
   color: #fff;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
   margin-bottom: 1.5rem;
   animation: fadeInUp 1s ease-out;
   line-height: 1.1;
   letter-spacing: -0.02em;
+  background: linear-gradient(to right, #fff 0%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .showcase__subtitle {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-family: "Poppins", sans-serif;
-  font-weight: 400;
-  color: #f8f9fa;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   animation: fadeInUp 1s ease-out 0.3s both;
+  line-height: 1.6;
 }
 
-.showcase__cta {
-  animation: fadeInUp 1s ease-out 0.6s both;
+.showcase__stats {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 1s ease-out 0.5s both;
 }
 
-.showcase__cta .btn {
-  padding: 1rem 2.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 50px;
-  margin: 0 0.5rem;
-  transition: all 0.3s ease;
+.showcase__stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.showcase__stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #D4AF37;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 0.25rem;
+}
+
+.showcase__stat-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.showcase__cta .btn-primary {
-  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+.showcase__cta {
+  animation: fadeInUp 1s ease-out 0.7s both;
+  margin-bottom: 1.5rem;
+}
+
+.showcase__cta-button {
+  padding: 1.2rem 2.8rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  margin: 0 0.5rem 1rem;
+  transition: all 0.4s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.showcase__cta-button--primary {
+  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
   border: none;
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+  color: #000;
 }
 
-.showcase__cta .btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.6);
+.showcase__cta-button--primary:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.7);
 }
 
-.showcase__cta .btn-outline-light {
-  border: 2px solid rgba(255, 255, 255, 0.8);
+.showcase__cta-button--secondary {
+  border: 2px solid rgba(255, 255, 255, 0.9);
   color: white;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
 }
 
-.showcase__cta .btn-outline-light:hover {
-  background: rgba(255, 255, 255, 0.2);
+.showcase__cta-button--secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.showcase__cta-button--secondary:hover::before {
+  left: 100%;
+}
+
+.showcase__cta-button--secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
   border-color: white;
-  transform: translateY(-3px);
+  transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
 }
 
-/* Floating elements animation */
+.showcase__assurance {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  animation: fadeIn 1s ease-out 1s both;
+  backdrop-filter: blur(5px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Enhanced floating elements */
 .showcase__floating-elements {
   position: absolute;
   top: 0;
@@ -139,33 +229,54 @@
 
 .showcase__floating-element {
   position: absolute;
-  background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
-  animation: float 6s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
 }
 
-.showcase__floating-element:nth-child(1) {
+.showcase__floating-element--1 {
+  width: 120px;
+  height: 120px;
+  top: 15%;
+  left: 5%;
+  animation-delay: 0s;
+  box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+}
+
+.showcase__floating-element--2 {
   width: 80px;
   height: 80px;
-  top: 10%;
-  left: 10%;
-  animation-delay: 0s;
-}
-
-.showcase__floating-element:nth-child(2) {
-  width: 60px;
-  height: 60px;
-  top: 70%;
-  left: 80%;
+  top: 75%;
+  left: 85%;
   animation-delay: 2s;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
 }
 
-.showcase__floating-element:nth-child(3) {
+.showcase__floating-element--3 {
   width: 100px;
   height: 100px;
   top: 30%;
-  right: 10%;
+  right: 5%;
   animation-delay: 4s;
+  box-shadow: 0 0 50px rgba(118, 75, 162, 0.3);
+}
+
+.showcase__floating-element--4 {
+  width: 60px;
+  height: 60px;
+  top: 65%;
+  left: 10%;
+  animation-delay: 1s;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+.showcase__floating-element--5 {
+  width: 90px;
+  height: 90px;
+  top: 20%;
+  left: 75%;
+  animation-delay: 3s;
+  box-shadow: 0 0 45px rgba(212, 175, 55, 0.3);
 }
 
 @keyframes fadeInUp {
@@ -180,16 +291,24 @@
 }
 
 @keyframes float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
   }
-  50% {
-    transform: translateY(-20px) rotate(180deg);
+  33% {
+    transform: translateY(-20px) rotate(120deg) scale(1.05);
+  }
+  66% {
+    transform: translateY(10px) rotate(240deg) scale(0.95);
   }
 }
 
 /* Responsive Design */
+@media (max-width: 992px) {
+  .showcase__stats {
+    gap: 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .showcase {
     min-height: 80vh;
@@ -197,26 +316,51 @@
   }
 
   .showcase__hero {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
   }
 
   .showcase__subtitle {
     font-size: 1.2rem;
   }
 
-  .showcase__cta .btn {
+  .showcase__stats {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .showcase__cta-button {
     display: block;
     width: 100%;
-    margin: 0.5rem 0;
+    margin: 0.75rem 0;
   }
 }
 
 @media (max-width: 480px) {
   .showcase__hero {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   .showcase__subtitle {
     font-size: 1rem;
+  }
+
+  .showcase__stats {
+    gap: 1rem;
+  }
+
+  .showcase__stat-number {
+    font-size: 1.5rem;
+  }
+
+  .showcase__stat-label {
+    font-size: 0.8rem;
+  }
+
+  .showcase__premium-badge {
+    padding: 0.4rem 1rem;
+  }
+
+  .showcase__badge-text {
+    font-size: 0.7rem;
   }
 }

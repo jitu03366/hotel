@@ -9,6 +9,7 @@ function Navbar(props) {
   const [state, dispatch] = useStateValue();
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState("home");
 
   var mobileMenu = useRef();
   var navbar = useRef();
@@ -52,95 +53,136 @@ function Navbar(props) {
     }
   }, [state.navToggled]);
 
-  const handleNavClick = (scrollFunction) => {
+  const handleNavClick = (scrollFunction, itemName) => {
     if (state.navToggled) {
       toggleNav();
     }
     if (scrollFunction) {
       scrollFunction();
     }
+    if (itemName) {
+      setActiveItem(itemName);
+    }
   };
 
   return (
     <div>
+      <div className="navbar-backdrop"></div>
       <div
-        className={`header__navbar shadow-sm d-flex align-items-center justify-content-center ${
-          scrolled ? "scrolled" : ""
-        }`}
+        className={`header__navbar ${scrolled ? "scrolled" : ""}`}
         ref={navbar}
       >
+        <div className="navbar-inner-glow"></div>
         <div className="container d-flex align-items-center justify-content-between">
-          <Link to="/" onClick={() => handleNavClick(props.scrollToHome)}>
-            <img
-              src="http://hruyan.com/assets/images/logo.png"
-              alt="Hotel Logo"
-              className="header__navbar__logo"
-            />
+          <Link
+            to="/"
+            onClick={() => handleNavClick(props.scrollToHome, "home")}
+            className="navbar-brand"
+          >
+            <div className="logo-container">
+              <img
+                src="http://hruyan.com/assets/images/logo.png"
+                alt=""
+                className="header__navbar__logo"
+              />
+              <div className="logo-glow"></div>
+            </div>
+            <span className="brand-text"> </span>
           </Link>
           <div className="d-flex align-items-center justify-content-between">
             <ul className="header__navbar__links d-flex m-0" ref={mobileMenu}>
               <li className="list-unstyled d-flex align-items-center justify-content-center">
                 <Link
                   to="/"
-                  className="nav-link"
-                  onClick={() => handleNavClick(props.scrollToHome)}
+                  className={`nav-link ${
+                    activeItem === "home" ? "active" : ""
+                  }`}
+                  onClick={() => handleNavClick(props.scrollToHome, "home")}
                 >
-                  Home
+                  <span className="nav-text">Home</span>
+                  <div className="nav-underline"></div>
                 </Link>
               </li>
               <li className="list-unstyled d-flex align-items-center justify-content-center">
                 <Link
                   to=""
-                  onClick={() => handleNavClick(props.scrollToGallery)}
-                  className="nav-link"
+                  className={`nav-link ${
+                    activeItem === "gallery" ? "active" : ""
+                  }`}
+                  onClick={() =>
+                    handleNavClick(props.scrollToGallery, "gallery")
+                  }
                 >
-                  Gallery
+                  <span className="nav-text">Gallery</span>
+                  <div className="nav-underline"></div>
                 </Link>
               </li>
               <li className="list-unstyled d-flex align-items-center justify-content-center">
                 <Link
                   to=""
-                  onClick={() => handleNavClick(props.scrollToRooms)}
-                  className="nav-link"
+                  className={`nav-link ${
+                    activeItem === "rooms" ? "active" : ""
+                  }`}
+                  onClick={() => handleNavClick(props.scrollToRooms, "rooms")}
                 >
-                  Rooms
+                  <span className="nav-text">Rooms</span>
+                  <div className="nav-underline"></div>
                 </Link>
               </li>
               <li className="list-unstyled d-flex align-items-center justify-content-center">
                 <Link
                   to=""
-                  onClick={() => handleNavClick(props.scrollToAccommodations)}
-                  className="nav-link"
+                  className={`nav-link ${
+                    activeItem === "accommodations" ? "active" : ""
+                  }`}
+                  onClick={() =>
+                    handleNavClick(
+                      props.scrollToAccommodations,
+                      "accommodations"
+                    )
+                  }
                 >
-                  Accommodations
+                  <span className="nav-text">Accommodations</span>
+                  <div className="nav-underline"></div>
                 </Link>
               </li>
               <li className="list-unstyled d-flex align-items-center justify-content-center">
                 <Link
                   to=""
-                  onClick={() => handleNavClick(props.scrollToAbout)}
-                  className="nav-link"
+                  className={`nav-link ${
+                    activeItem === "about" ? "active" : ""
+                  }`}
+                  onClick={() => handleNavClick(props.scrollToAbout, "about")}
                 >
-                  About Us
+                  <span className="nav-text">About Us</span>
+                  <div className="nav-underline"></div>
                 </Link>
               </li>
               <li className="list-unstyled d-flex align-items-center justify-content-center">
                 <Link
                   to=""
-                  onClick={() => handleNavClick(props.scrollToContact)}
-                  className="nav-link"
+                  className={`nav-link ${
+                    activeItem === "contact" ? "active" : ""
+                  }`}
+                  onClick={() =>
+                    handleNavClick(props.scrollToContact, "contact")
+                  }
                 >
-                  Contact Us
+                  <span className="nav-text">Contact Us</span>
+                  <div className="nav-underline"></div>
                 </Link>
               </li>
               <li className="list-unstyled d-flex align-items-center justify-content-center">
                 <Link
                   to=""
-                  onClick={() => handleNavClick(props.scrollToBookNow)}
-                  className="nav-link button btn btn-primary"
-                  style={{ color: "#fff" }}
+                  className="nav-link button btn-book"
+                  onClick={() => handleNavClick(props.scrollToBookNow, "book")}
                 >
-                  Book Now
+                  <span className="btn-text">Book Now</span>
+                  <div className="btn-shine"></div>
+                  <div className="pulse-effect"></div>
+                  <div className="sparkle">✨</div>
+                  <div className="sparkle sparkle-2">✨</div>
                 </Link>
               </li>
             </ul>
