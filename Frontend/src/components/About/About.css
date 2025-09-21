@@ -1,10 +1,184 @@
-.about__hero {
-  font-family: Poppins Black;
-  font-size: 50px;
-  color: black;
+/* About.css */
+
+/* Base Styles */
+.about__container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hero Section with Background */
+.about__hero-section {
+  height: 70vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.about__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(10, 36, 88, 0.7) 0%, rgba(166, 136, 54, 0.7) 100%);
+}
+
+.about__hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 2;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+/* Content Section */
+.about__content {
+  padding: 5rem 2rem;
+  background-color: #faf8f5;
+  position: relative;
+}
+
+.about__text-container {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  background: white;
+  padding: 3rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
 }
 
 .about__paragraph {
-  font-family: Poppins Regular;
-  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.about__first-paragraph {
+  margin-bottom: 2.5rem;
+}
+
+.about__second-paragraph {
+  margin-top: 2.5rem;
+}
+
+.about__highlight {
+  color: #a68832;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+
+.about__highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #a68832, transparent);
+}
+
+/* Divider */
+.about__divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.about__divider-inner {
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, #a68832, #0a2458, #a68832);
+  border-radius: 3px;
+}
+
+/* Decorative Elements */
+.about__decorative-top, .about__decorative-bottom {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cpath d='M0,10 Q30,0 50,10 Q70,20 100,10' stroke='%23a68832' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.about__decorative-top {
+  top: -10px;
+}
+
+.about__decorative-bottom {
+  bottom: -10px;
+  transform: translateX(-50%) rotate(180deg);
+}
+
+.about__floral-element {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50,10 C60,10 70,15 75,25 C80,35 80,45 75,55 C70,65 60,70 50,70 C40,70 30,65 25,55 C20,45 20,35 25,25 C30,15 40,10 50,10 Z' fill='none' stroke='%23a68832' stroke-width='1' opacity='0.3'/%3E%3Cpath d='M50,20 C55,20 60,22 63,27 C66,32 66,38 63,43 C60,48 55,50 50,50 C45,50 40,48 37,43 C34,38 34,32 37,27 C40,22 45,20 50,20 Z' fill='none' stroke='%23a68832' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 1;
+  opacity: 0.15;
+}
+
+.about__floral-1 {
+  top: 40%;
+  left: 5%;
+  transform: rotate(25deg);
+}
+
+.about__floral-2 {
+  bottom: 30%;
+  right: 5%;
+  transform: rotate(-15deg);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about__hero-title {
+    font-size: 3.5rem;
+  }
+  
+  .about__text-container {
+    padding: 2rem 1.5rem;
+  }
+  
+  .about__paragraph {
+    font-size: 1rem;
+  }
+  
+  .about__floral-element {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .about__hero-title {
+    font-size: 2.8rem;
+  }
+  
+  .about__hero-section {
+    height: 50vh;
+  }
+  
+  .about__content {
+    padding: 3rem 1rem;
+  }
 }

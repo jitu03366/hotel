@@ -29,7 +29,7 @@ function Showcase(props) {
                 </span>
               </div>
 
-              <h1 className="showcase__hero">Experience Royal Luxury</h1>
+              <h1 className="showcase__hero">HOTE ROYAL BLUE STAR</h1>
               <p className="showcase__subtitle">
                 Indulge in unparalleled elegance with our exclusive
                 accommodations. For instant reservations and personalized
@@ -40,9 +40,7 @@ function Showcase(props) {
               <div className="showcase__stats">
                 <div className="showcase__stat-item">
                   <span className="showcase__stat-number">24/7</span>
-                  <span className="showcase__stat-label">
-                    Concierge Service
-                  </span>
+                  <span className="showcase__stat-label">Extra Service</span>
                 </div>
                 <div className="showcase__stat-item">
                   <span className="showcase__stat-number">5★</span>
@@ -60,7 +58,7 @@ function Showcase(props) {
                   onClick={props.scrollToBookNow}
                 >
                   <i className="fas fa-calendar-check mr-2"></i>
-                  Reserve Suite
+                  Book Now
                 </button>
                 <button
                   className="btn btn-outline-light btn-lg mb-2 showcase__cta-button showcase__cta-button--secondary"

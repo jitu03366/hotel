@@ -1,50 +1,435 @@
+/* Footer.css */
+
 .footer {
+  position: relative;
   width: 100%;
-  background: black;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2a 100%);
+  color: #fff;
+  padding: 80px 0 30px;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.2);
 }
 
-.footer p {
-  font-family: Poppins Regular;
-  color: #fff;
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
 }
-.footer {
+
+.footer-top-border {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  background: #000;
-  color: #fff;
-  text-align: center;
-  padding: 40px 20px;
+  height: 4px;
+  background: linear-gradient(90deg, #d4af37, #f8de7e, #d4af37);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
 }
 
-.footer-title {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #f8f8f8;
+.footer-content {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
 }
 
-.footer-text {
+.premium-badge {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.badge-inner {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+  padding: 12px 25px;
+  border-radius: 30px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+.badge-crown {
+  color: #d4af37;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.badge-inner span {
   font-size: 14px;
-  margin: 5px 0;
+  letter-spacing: 1.5px;
+  color: #d4af37;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.footer-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+.footer-brand {
+  padding-right: 20px;
+}
+
+.hotel-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.logo-crown {
+  font-size: 32px;
+  color: #d4af37;
+  margin-right: 15px;
+  filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+}
+
+.hotel-name {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(45deg, #d4af37, #f8de7e, #d4af37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.hotel-tagline {
+  font-style: italic;
+  color: #d4af37;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.hotel-description {
+  font-size: 14px;
   line-height: 1.6;
+  color: #a0a0b8;
+  margin-bottom: 20px;
+}
+
+.awards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.award-item {
+  font-size: 13px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  color: #d4af37;
+  border-left: 2px solid #d4af37;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, #d4af37, transparent);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  color: #a0a0b8;
+  line-height: 1.5;
+}
+
+.contact-icon {
+  color: #d4af37;
+  font-size: 16px;
+  min-width: 16px;
+  margin-top: 2px;
+}
+
+.contact-item a {
+  color: #a0a0b8;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.contact-item a:hover {
+  color: #d4af37;
+  text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+}
+
+.facilities-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.facilities-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #a0a0b8;
+  transition: all 0.3s ease;
+}
+
+.facilities-list li:hover {
+  color: #d4af37;
+  transform: translateX(5px);
+}
+
+.facilities-list li svg {
+  color: #d4af37;
+  font-size: 14px;
+}
+
+.social-text {
+  font-size: 14px;
+  color: #a0a0b8;
+  margin-bottom: 20px;
 }
 
 .social-links {
-  margin: 15px 0;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
-.social-links a {
-  margin: 0 10px;
-  font-size: 22px;
-  color: #fff;
-  transition: color 0.3s ease;
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  color: #a0a0b8;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.social-links a:hover {
-  color: #007bff;
+.social-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #d4af37, #f8de7e);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 50%;
 }
 
-.footer-credit {
+.social-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+  color: #0a0a1a;
+}
+
+.social-link:hover::before {
+  opacity: 1;
+}
+
+.social-link svg {
+  position: relative;
+  z-index: 1;
+  font-size: 18px;
+}
+
+.newsletter h5 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.newsletter-form {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 12px 15px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+.newsletter-form input::placeholder {
+  color: #a0a0b8;
+}
+
+.newsletter-form input:focus {
+  outline: none;
+}
+
+.newsletter-form button {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #d4af37, #f8de7e);
+  border: none;
+  color: #0a0a1a;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  background: linear-gradient(135deg, #f8de7e, #d4af37);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 30px;
+}
+
+.footer-divider {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.divider-ornament {
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  border-radius: 3px;
+}
+
+.footer-credits {
+  text-align: center;
+}
+
+.credit-text {
   font-size: 13px;
-  margin-top: 15px;
-  color: #bbb;
+  color: #a0a0b8;
+  margin: 0;
+}
+
+.credit-text strong {
+  color: #d4af37;
+  font-weight: 600;
+}
+
+.separator {
+  color: #666;
+  margin: 0 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .footer-sections {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 60px 0 25px;
+  }
+  
+  .footer-sections {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  
+  .footer-brand {
+    padding-right: 0;
+    text-align: center;
+  }
+  
+  .hotel-logo {
+    justify-content: center;
+  }
+  
+  .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+  }
+  
+  .newsletter-form input {
+    padding: 15px;
+  }
+  
+  .newsletter-form button {
+    padding: 15px;
+    border-radius: 0 0 8px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 50px 0 20px;
+  }
+  
+  .hotel-name {
+    font-size: 22px;
+  }
+  
+  .section-title {
+    font-size: 16px;
+  }
+  
+  .social-links {
+    gap: 10px;
+  }
+  
+  .social-link {
+    width: 40px;
+    height: 40px;
+  }
 }
