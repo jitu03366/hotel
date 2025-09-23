@@ -32,11 +32,18 @@ const roomSchema = new mongoose.Schema({
       type: String,
       validate: {
         validator: function (v) {
-          // Basic URL validation
-          return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(v);
+          // Accept both Cloudinary URLs and public_ids
+          return (
+            // Cloudinary URL format
+            /^https?:\/\/res\.cloudinary\.com\/.*/.test(v) ||
+            // Cloudinary public_id format
+            /^[\w-]+\/([\w-]+\/)*[\w-]+\.(jpg|jpeg|png|gif)$/.test(v)
+          );
         },
-        message: "Please provide valid image URLs",
+        message: (props) =>
+          `${props.value} is not a valid Cloudinary image URL or public_id`,
       },
+      required: [true, "At least one image is required"],
     },
   ],
   description: {
@@ -82,6 +89,19 @@ roomSchema.pre("save", function (next) {
 roomSchema.statics.findAvailableRooms = function () {
   return this.find({ isAvailable: true });
 };
+// Add method to transform image URLs
+roomSchema.methods.getImageUrls = function () {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+
+  return this.images.map((image) => {
+    // If already a full URL, return as is
+    if (image.startsWith("http")) {
+      return image;
+    }
+    // Convert public_id to full Cloudinary URL
+    return `https://res.cloudinary.com/${cloudName}/image/upload/${image}`;
+  });
+};
 
 // Instance method to check availability for dates
 roomSchema.methods.checkAvailability = function (checkInDate, checkOutDate) {
@@ -95,7 +115,16 @@ roomSchema.virtual("formattedRent").get(function () {
 });
 
 // Ensure virtual fields are serialized
-roomSchema.set("toJSON", { virtuals: true });
+//roomSchema.set("toJSON", { virtuals: true });
+roomSchema.set("toJSON", {
+  virtuals: true,
+  transform: function (doc, ret) {
+    if (ret.images) {
+      ret.images = doc.getImageUrls();
+    }
+    return ret;
+  },
+});
 roomSchema.set("toObject", { virtuals: true });
 
 module.exports = mongoose.model("Room", roomSchema);
