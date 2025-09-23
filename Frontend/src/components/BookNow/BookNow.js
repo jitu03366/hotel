@@ -431,10 +431,10 @@ function BookNow() {
           <div className="bookNow__stage d-none" ref={secondStage}>
             <div className="bookNow__stage-header">
               <h2>Guests & Room Selection</h2>
-              <p>Tell us about your party and room preferences</p>
+              {/* <p>Tell us about your party and room preferences</p> */}
             </div>
 
-            <div className="bookNow__form-grid">
+            {/* <div className="bookNow__form-grid">
               <div className="bookNow__input-group">
                 <label htmlFor="adult" className="bookNow__label">
                   <span className="bookNow__label-icon">👨‍👩‍👧‍👦</span>
@@ -543,7 +543,7 @@ function BookNow() {
                   <div className="bookNow__select-arrow">▼</div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="bookNow__stage-actions">
               <button
@@ -553,14 +553,14 @@ function BookNow() {
               >
                 ← Back to Dates
               </button>
-              <button
+              {/* <button
                 type="button"
                 className="bookNow__button bookNow__button--primary"
                 onClick={() => changeStage(2, 3)}
               >
                 Continue to Details
                 <span className="bookNow__button-arrow">→</span>
-              </button>
+              </button> */}
               <button
                 type="button"
                 className="bookNow__button bookNow__button--outline"
