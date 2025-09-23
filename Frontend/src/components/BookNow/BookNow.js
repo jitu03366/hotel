@@ -578,7 +578,7 @@ function BookNow() {
               <p>We'll use this to confirm your reservation</p>
             </div>
 
-            <div className="bookNow__form-grid">
+            {/* <div className="bookNow__form-grid">
               <div className="bookNow__input-group">
                 <label htmlFor="full_name" className="bookNow__label">
                   <span className="bookNow__label-icon">👤</span>
@@ -745,9 +745,9 @@ function BookNow() {
                   <div className="bookNow__input-decoration"></div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            <div className="bookNow__stage-actions">
+            {/* <div className="bookNow__stage-actions">
               <button
                 type="button"
                 className="bookNow__button bookNow__button--secondary"
@@ -770,11 +770,11 @@ function BookNow() {
                   "Complete Reservation"
                 )}
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* Fourth Stage - Confirmation */}
-          <div className="bookNow__stage d-none" ref={fourthStage}>
+          {/* <div className="bookNow__stage d-none" ref={fourthStage}>
             <div className="bookNow__success">
               <div className="bookNow__success-icon">✓</div>
               <h2>Reservation Confirmed!</h2>
@@ -790,7 +790,7 @@ function BookNow() {
                 Return to Home
               </button>
             </div>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>
