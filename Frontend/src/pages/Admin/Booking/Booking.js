@@ -67,7 +67,7 @@ function Booking() {
     <div>
       <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <Link to="/admin" className="navbar-brand col-md-3 col-lg-2 me-0 px-3">
-          BSS Admin
+          Hotel Royal Blue Star Admin
         </Link>
         <button
           className="navbar-toggler position-absolute d-md-none collapsed"
@@ -108,10 +108,12 @@ function Booking() {
                 <thead>
                   <tr>
                     <th scope="col">Name</th>
+
                     <th scope="col">Room Id</th>
                     <th scope="col">Room Amount</th>
                     <th scope="col">paymentStatus</th>
                     <th scope="col">Action</th>
+                    {/* <th scope="col">phone</th> */}
                   </tr>
                 </thead>
 
@@ -150,6 +152,7 @@ function Booking() {
                               Delete
                             </button>
                           </td>
+                          {/* <td>{book.userPhone}</td> */}
                         </tr>
                       ))}
                 </tbody>

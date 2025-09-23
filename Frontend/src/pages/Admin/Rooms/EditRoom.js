@@ -258,7 +258,7 @@ function EditRoom(props) {
 
       <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <Link to="/admin" className="navbar-brand col-md-3 col-lg-2 me-0 px-3">
-          BSS Admin
+          Hotel Royal Blue Star Admin
         </Link>
         <button
           className="navbar-toggler position-absolute d-md-none collapsed"
@@ -411,9 +411,7 @@ function EditRoom(props) {
 
                 <div className="col-md-6">
                   <div className="mb-3">
-                    <label className="form-label">
-                      Room Images
-                    </label>
+                    <label className="form-label">Room Images</label>
                     <ImageUpload
                       images={formData.images}
                       onImagesChange={handleImagesChange}
@@ -422,7 +420,9 @@ function EditRoom(props) {
                       className={errors.images ? "error" : ""}
                     />
                     {errors.images && (
-                      <div className="invalid-feedback d-block">{errors.images}</div>
+                      <div className="invalid-feedback d-block">
+                        {errors.images}
+                      </div>
                     )}
                     <div className="form-text">
                       Upload up to 10 images for your room (optional)

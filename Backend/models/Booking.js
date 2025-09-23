@@ -49,11 +49,22 @@ const bookingSchema = new mongoose.Schema({
     required: false,
     default: null,
   },
+  // userEmail: {
+  //   type: String,
+  //   required: true,
+  //   lowercase: true,
+  //   trim: true,
+  // },
   userEmail: {
     type: String,
     required: true,
     lowercase: true,
     trim: true,
+  },
+  userPhone: {
+    // Add this field
+    type: String,
+    required: true,
   },
   checkInDate: {
     type: Date,

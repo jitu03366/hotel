@@ -3,36 +3,53 @@ const User = require("../models/UserModel");
 // Create a new user or update existing user
 const createUser = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, name, phone } = req.body;
+    //console.log("Received booking user details:", { email, name, phone });
 
-    // Check if user with this email already exists
-    const existingUser = await User.findOne({ email: email.toLowerCase() });
-
-    if (existingUser) {
-      // Update existing user with new information
-      const updatedUser = await User.findByIdAndUpdate(
-        existingUser._id,
-        req.body,
-        { new: true, runValidators: true }
-      );
-
-      return res.status(200).json({
-        success: true,
-        data: updatedUser,
-        message: "User updated successfully",
-      });
-    } else {
-      // Create new user
-      const user = new User(req.body);
-      console.log("Booking...... userss", user);
-      const savedUser = await user.save();
-      res.status(201).json({
-        success: true,
-        data: savedUser,
-        message: "User created successfully",
+    if (!email || !name || !phone) {
+      return res.status(400).json({
+        success: false,
+        message: "Name, email and phone are required fields",
       });
     }
+
+    // Normalize the phone number (remove spaces, hyphens etc)
+    //const normalizedPhone = phone.replace(/[^0-9]/g, "");
+
+    // Check if user exists
+    let user = await User.findOne({ email: email.toLowerCase() });
+
+    if (user) {
+      // Update existing user
+      user.name = name;
+      user.phone = phone;
+      await user.save();
+
+      //console.log("Updated existing user:", user);
+      return res.status(200).json({
+        success: true,
+        data: user,
+        message: "User updated successfully",
+      });
+    }
+
+    // Create new user
+    user = new User({
+      name,
+      email: email.toLowerCase(),
+      phone: phone,
+    });
+
+    const savedUser = await user.save();
+    //console.log("Created new user:", savedUser);
+
+    res.status(201).json({
+      success: true,
+      data: savedUser,
+      message: "User created successfully",
+    });
   } catch (error) {
+    //console.error("Error creating/updating user:", error);
     if (error.code === 11000) {
       return res.status(400).json({
         success: false,
@@ -41,7 +58,7 @@ const createUser = async (req, res) => {
     }
     res.status(400).json({
       success: false,
-      message: error.message,
+      message: error.message || "Error creating user",
     });
   }
 };
@@ -50,7 +67,7 @@ const createUser = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     const users = await User.find().sort({ createdAt: -1 });
-    console.log(users);
+    //console.log(users);
     res.status(200).json({
       success: true,
       data: users,
