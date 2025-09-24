@@ -1,5 +1,6 @@
 const Booking = require("../models/Booking");
 const User = require("../models/UserModel");
+const { sendMail, formatBookingHtml } = require("../utils/mailer");
 
 // Get all reservations
 const listAllReservations = async (req, res) => {
@@ -165,6 +166,32 @@ const createReservation = async (req, res) => {
     const populatedBooking = await Booking.findById(savedBooking._id)
       .populate("userId")
       .populate("bookingInfo.roomId");
+
+    // Send confirmation emails (best-effort)
+    try {
+      const adminEmail = process.env.ADMIN_EMAIL;
+      const subjectUser = `Your booking ${
+        populatedBooking.bookCode || populatedBooking._id
+      } has been created`;
+      const subjectAdmin = `New booking ${
+        populatedBooking.bookCode || populatedBooking._id
+      } created`;
+      const html = formatBookingHtml(populatedBooking, "Booking Created");
+
+      if (populatedBooking.userEmail) {
+        await sendMail({
+          to: populatedBooking.userEmail,
+          subject: subjectUser,
+          html,
+        });
+      }
+      if (adminEmail) {
+        await sendMail({ to: adminEmail, subject: subjectAdmin, html });
+      }
+    } catch (e) {
+      // non-blocking
+      console.warn("Email send (createReservation) failed:", e.message);
+    }
 
     res.status(201).json({
       success: true,

@@ -23,6 +23,7 @@ import Booking from "./pages/Admin/Booking/Booking";
 import Payment from "./pages/Payment/Payment";
 import Receipt from "./pages/Payment/Receipt";
 import PendingPayment from "./pages/Payment/PendingPayment";
+import BookingDetails from "./pages/BookingDetails/BookingDetails";
 import PrivacyPolicy from "./pages/Legal/PrivacyPolicy";
 import TermsAndConditions from "./pages/Legal/TermsAndConditions";
 import CancellationAndRefund from "./pages/Legal/CancellationAndRefund";
@@ -75,6 +76,7 @@ function App() {
         <Route exact path="/user-details" component={UserDetails} />
         <Route exact path="/payment" component={Payment} />
         <Route exact path="/receipt" component={Receipt} />
+        <Route exact path="/booking/:id" component={BookingDetails} />
         <Route exact path="/pending-payment" component={PendingPayment} />
         <Route exact path="/privacy-policy" component={PrivacyPolicy} />
         <Route exact path="/terms-and-conditions" component={TermsAndConditions} />

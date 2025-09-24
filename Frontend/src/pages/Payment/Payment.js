@@ -171,14 +171,13 @@ const Payment = () => {
                 console.warn("Could not clear localStorage:", e);
               }
 
-              setStatus("Payment successful! Redirecting...");
+              setStatus("Payment successful! Redirecting to booking details...");
               setTimeout(() => {
-                history.push("/receipt", {
+                history.push(`/booking/${booking?._id}`, {
                   bookingId: booking?._id,
-                  paymentId: payment?._id,
-                  success: true,
+                  booking,
                 });
-              }, 2000);
+              }, 1500);
             } else {
               throw new Error(
                 verifyRes.data?.message || "Payment verification failed"
@@ -224,14 +223,13 @@ const Payment = () => {
 
       const { data } = await axios.post("/api/payment/cod", payload);
       if (data?.success) {
-        setStatus("Booking confirmed! You can pay cash on arrival.");
+        setStatus("Booking confirmed! Redirecting to details...");
         setTimeout(() => {
-          history.push("/receipt", {
+          history.push(`/booking/${data.data?.bookingId}`, {
             bookingId: data.data?.bookingId,
-            paymentMethod: "cod",
-            success: true,
+            booking: data.data?.booking,
           });
-        }, 2000);
+        }, 1500);
       } else {
         throw new Error(data?.message || "Could not process COD booking");
       }
