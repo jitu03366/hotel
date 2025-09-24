@@ -28,6 +28,12 @@ function CheckRoomsAndRates() {
         setIsLoading(true);
         const response = await axios.get("/api/rooms/available");
 
+        // Add debug logs
+        console.log("API Response:", response.data);
+        if (response.data.data && response.data.data.length > 0) {
+          console.log("First room images:", response.data.data[0].images);
+        }
+
         if (response.data.success) {
           setRooms(response.data.data);
           setMessage({ type: "", text: "" });
@@ -113,8 +119,12 @@ function CheckRoomsAndRates() {
                         className="card-img-top rooms__room"
                         alt={room.name}
                         onError={(e) => {
+                          console.error(
+                            `Failed to load image: ${room.images[0]}`
+                          ); // Add error logging
                           e.target.src = "/placeholder-room.jpg";
                         }}
+                        style={{ height: "200px", objectFit: "cover" }} // Add consistent sizing
                       />
                     ) : (
                       <div className="card-img-top rooms__room d-flex align-items-center justify-content-center bg-light">
@@ -146,7 +156,7 @@ function CheckRoomsAndRates() {
                         <div className="col-6">
                           <small className="text-muted">Price</small>
                           <div className="fw-bold text-success">
-                            ${room.rentPerDay}/night
+                            ₹{room.rentPerDay}/night
                           </div>
                         </div>
                       </div>

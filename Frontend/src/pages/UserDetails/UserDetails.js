@@ -54,8 +54,8 @@ function UserDetails() {
     }
 
     // Basic validation
-    if (!name || !email) {
-      setFormError("Name and Email are required");
+    if (!name || !email || !phone) {
+      setFormError("Name, Email and Phone are required");
       return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -63,15 +63,43 @@ function UserDetails() {
       setFormError("Please enter a valid email address");
       return;
     }
+
+    // Phone validation to match your schema
+    // Inside handleSubmit function
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(phone)) {
+      setFormError("Phone number must start with 6-9 and be exactly 10 digits");
+      return;
+    }
+
     setFormError("");
 
-    // Build quote and redirect to payment (no skip payment)
     try {
       setSubmitting(true);
+
+      // Build user data for the reservation API - only required fields + optional address
+      const userData = {
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        phone: phone.trim(),
+      };
+
+      // Only include address fields if they have values
+      if (address || address2 || city || statee || zip || country) {
+        userData.address = {};
+        if (address) userData.address.street = address.trim();
+        if (address2) userData.address.street2 = address2.trim();
+        if (city) userData.address.city = city.trim();
+        if (statee) userData.address.state = statee.trim();
+        if (zip) userData.address.zip = zip.trim();
+        if (country) userData.address.country = country.trim();
+      }
+
+      // Build quote data for payment page
       const quote = {
         userEmail: email.trim().toLowerCase(),
         name: name.trim(),
-        phone: phone ? phone.trim() : undefined,
+        phone: phone.trim(),
         address: {
           street: address ? address.trim() : undefined,
           street2: address2 ? address2.trim() : undefined,
@@ -98,6 +126,7 @@ function UserDetails() {
           },
         ],
       };
+
       // Compute total amount
       const ci = new Date(state.booking.checkIn);
       const co = new Date(state.booking.checkOut);
@@ -107,9 +136,26 @@ function UserDetails() {
         Math.ceil(diffMs / (1000 * 60 * 60 * 24))
       );
       quote.totalAmount = selectedRoom.rentPerDay * nightsComputed;
+
+      // Call the API to add reservation/user details
+      try {
+        const response = await axios.post(
+          "/api/users/add_reservation",
+          userData
+        );
+        console.log("User reservation saved:", response.data);
+      } catch (error) {
+        console.error("Error saving user reservation:", error);
+        // Don't block the flow if this API call fails, just log it
+      }
+
+      // Save quote to localStorage and redirect to payment
       try {
         localStorage.setItem("pendingQuote", JSON.stringify(quote));
-      } catch {}
+      } catch (error) {
+        console.error("Error saving to localStorage:", error);
+      }
+
       history.push({ pathname: "/payment", state: { quote } });
     } finally {
       setSubmitting(false);
@@ -156,7 +202,7 @@ function UserDetails() {
                 </div>
               )}
               <label htmlFor="full_name" className="mt-3">
-                Full Name
+                Full Name*
               </label>
               <input
                 type="text"
@@ -168,7 +214,7 @@ function UserDetails() {
                 }}
               />
               <label htmlFor="email" className="mt-3">
-                Email
+                Email*
               </label>
               <input
                 type="text"
@@ -180,18 +226,22 @@ function UserDetails() {
                 }}
               />
               <label htmlFor="phone" className="mt-3">
-                Phone (09XXXXXXXX)
+                Phone* (Must start with 6-9 followed by 9 digits)
               </label>
               <input
                 type="text"
                 id="phone"
                 className="form-control"
+                placeholder="Enter 10 digit mobile number"
+                maxLength="10"
                 value={phone}
                 onChange={(e) => {
-                  setPhone(e.target.value);
+                  // Only allow numbers
+                  const value = e.target.value.replace(/[^\d]/g, "");
+                  setPhone(value);
                 }}
               />
-              <label htmlFor="country" className="mt-3">
+              {/* <label htmlFor="country" className="mt-3">
                 Country
               </label>
               <select
@@ -207,9 +257,9 @@ function UserDetails() {
                     {country.name}
                   </option>
                 ))}
-              </select>
+              </select> */}
 
-              <label htmlFor="full_name" className="mt-3">
+              {/* <label htmlFor="full_name" className="mt-3">
                 Address
               </label>
               <input
@@ -220,8 +270,8 @@ function UserDetails() {
                 onChange={(e) => {
                   setAddress(e.target.value);
                 }}
-              />
-              <label htmlFor="email" className="mt-3">
+              /> */}
+              {/* <label htmlFor="email" className="mt-3">
                 Address 2
               </label>
               <input
@@ -232,8 +282,8 @@ function UserDetails() {
                 onChange={(e) => {
                   setAddress2(e.target.value);
                 }}
-              />
-              <label htmlFor="phone" className="mt-3">
+              /> */}
+              {/* <label htmlFor="phone" className="mt-3">
                 ZIP Code
               </label>
               <input
@@ -244,8 +294,8 @@ function UserDetails() {
                 onChange={(e) => {
                   setZip(e.target.value);
                 }}
-              />
-              <label htmlFor="phone" className="mt-3">
+              /> */}
+              {/* <label htmlFor="phone" className="mt-3">
                 City
               </label>
               <input
@@ -256,9 +306,9 @@ function UserDetails() {
                 onChange={(e) => {
                   setCity(e.target.value);
                 }}
-              />
+              /> */}
 
-              <label htmlFor="phone" className="mt-3">
+              {/* <label htmlFor="phone" className="mt-3">
                 State
               </label>
               <input
@@ -269,7 +319,7 @@ function UserDetails() {
                 onChange={(e) => {
                   setState(e.target.value);
                 }}
-              />
+              /> */}
 
               <button
                 type="submit"

@@ -1,58 +1,75 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import { useStateValue } from "../../context/StateProvider";
 import { actionTypes } from "../../context/reducer";
-
 import { useHistory } from "react-router-dom";
-
 import "./BookNow.css";
 import countryList from "../../data/country_list.json";
 import axios from "../../axios";
 
 function BookNow() {
   const [, dispatch] = useStateValue();
-
   const history = useHistory();
 
   const [allRooms, setAllRooms] = useState([]);
-
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-
   const [adult, setAdult] = useState(1);
   const [child, setChild] = useState(0);
   const [guest, setGuest] = useState(1);
   const [room, setRoom] = useState(1);
   const [roomType, setRoomType] = useState("");
   const [selectedRoomId, setSelectedRoomId] = useState("");
-
-  //
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [country, setCountry] = useState();
-  const [address, setAddress] = useState();
-  const [address2, setAddress2] = useState();
-  const [zip, setZip] = useState();
-  const [city, setCity] = useState();
-  const [state, setState] = useState();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState("");
+  const [address, setAddress] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [zip, setZip] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [bookMsg, setBookMsg] = useState("");
+  const [bookingLoading, setBookingLoading] = useState(false);
+  const [roomsLoading, setRoomsLoading] = useState(true);
 
   const firstStage = useRef();
   const secondStage = useRef();
   const thirdStage = useRef();
   const fourthStage = useRef();
-
   const progressBar = useRef();
+  const checkInRef = useRef();
+  const checkOutRef = useRef();
 
-  const [bookMsg, setBookMsg] = useState("");
-  const [bookingLoading, setBookingLoading] = useState(false);
+  // Load available rooms when component mounts
+  useEffect(() => {
+    const loadRooms = async () => {
+      try {
+        setRoomsLoading(true);
+        const response = await axios.get("/api/rooms/available");
+        if (response.data && response.data.success) {
+          setAllRooms(response.data.data);
+        } else {
+          setBookMsg(
+            "Failed to load available rooms. Please refresh the page."
+          );
+        }
+      } catch (error) {
+        setBookMsg(
+          "Error loading rooms. Please check your connection and try again."
+        );
+      } finally {
+        setRoomsLoading(false);
+      }
+    };
+
+    loadRooms();
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
   }
 
   function clearFormFields() {
-    // Clear all form fields
     setCheckIn("");
     setCheckOut("");
     setAdult(1);
@@ -74,8 +91,8 @@ function BookNow() {
 
   useEffect(() => {
     if (progressBar.current) {
-      progressBar.current.style = "width: 50%";
-      progressBar.current.innerText = "50%";
+      progressBar.current.style = "width: 25%";
+      progressBar.current.innerText = "25%";
     }
 
     async function getRooms() {
@@ -112,8 +129,8 @@ function BookNow() {
       }
 
       // Validate phone number format if provided
-      if (phone && !/^09\d{9}$/.test(phone)) {
-        return alert("Please enter a valid phone number (09XXXXXXXX)");
+      if (!phone || !/^\d{10}$/.test(phone)) {
+        return alert("Please enter a valid 10-digit phone number");
       }
 
       // compute nights
@@ -131,7 +148,7 @@ function BookNow() {
         const userPayload = {
           name: name.trim(),
           email: email.trim().toLowerCase(),
-          phone: phone ? phone.trim() : "0900000000", // Default phone if not provided
+          phone: phone ? phone.trim() : "0900000000",
           address: {
             street: address ? address.trim() : "",
             street2: address2 ? address2.trim() : "",
@@ -153,7 +170,6 @@ function BookNow() {
         }
       } catch (userError) {
         console.error("User creation error:", userError);
-        // If user creation fails, continue with booking using email
       }
 
       const payload = {
@@ -229,25 +245,6 @@ function BookNow() {
         return alert("Please select a room type");
       }
     }
-    // if (from === 3 && to > from) {
-    //   if (name === undefined) {
-    //     return alert("Name In is Required");
-    //   } else if (email === undefined) {
-    //     return alert("Email is Required");
-    //   } else if (phone === undefined) {
-    //     return alert("Phone is Required");
-    //   } else if (country === undefined) {
-    //     return alert("Country is Required");
-    //   } else if (address === undefined) {
-    //     return alert("Address is Required");
-    //   } else if (zip === undefined) {
-    //     return alert("ZIP Code is Required");
-    //   } else if (city === undefined) {
-    //     return alert("City is Required");
-    //   } else if (state === undefined) {
-    //     return alert("State is Required");
-    //   }
-    // }
 
     if (to === 1) {
       firstStage.current.classList.remove("d-none");
@@ -256,8 +253,8 @@ function BookNow() {
       fourthStage.current.classList.add("d-none");
 
       if (progressBar.current) {
-        progressBar.current.style = "width: 50%";
-        progressBar.current.innerText = "50%";
+        progressBar.current.style = "width: 25%";
+        progressBar.current.innerText = "25%";
       }
     }
 
@@ -268,8 +265,8 @@ function BookNow() {
       fourthStage.current.classList.add("d-none");
 
       if (progressBar.current) {
-        progressBar.current.style = "width: 100%";
-        progressBar.current.innerText = "100%";
+        progressBar.current.style = "width: 50%";
+        progressBar.current.innerText = "50%";
       }
     }
 
@@ -290,8 +287,6 @@ function BookNow() {
       secondStage.current.classList.add("d-none");
       thirdStage.current.classList.add("d-none");
       fourthStage.current.classList.remove("d-none");
-
-      // Redirect to full details/payment page for consistency
       history.push("/user-details");
     }
   }
@@ -310,362 +305,492 @@ function BookNow() {
         checkOut: checkOut,
         guest: guest,
         room: room,
-        // roomType: roomType,
       },
     });
 
     history.push("/check-rooms-and-rates");
   }
 
-  const checkInRef = useRef();
-  const checkOutRef = useRef();
-
   useEffect(() => {
     var today = new Date().toISOString().split("T")[0];
-    checkInRef.current.setAttribute("min", today);
+    if (checkInRef.current) {
+      checkInRef.current.setAttribute("min", today);
+    }
 
-    if (checkIn === undefined) {
-      checkOutRef.current.disabled = true;
+    if (checkIn === undefined || checkIn === "") {
+      if (checkOutRef.current) {
+        checkOutRef.current.disabled = true;
+      }
     } else {
-      checkOutRef.current.disabled = false;
-      checkOutRef.current.setAttribute("min", checkIn);
+      if (checkOutRef.current) {
+        checkOutRef.current.disabled = false;
+        checkOutRef.current.setAttribute("min", checkIn);
+      }
     }
   }, [checkIn]);
 
   return (
-    <div className="bookNow mt-5 pt-5 pb-5">
-      <div className="container">
-        <h1 className="text-center bookNow__title">Book Now</h1>
-        <div className="progress">
-          <div
-            className="progress-bar bg-success"
-            role="progressbar"
-            aria-valuenow="0"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            ref={progressBar}
-          >
-            0%
+    <div className="bookNow">
+      <div className="bookNow__background"></div>
+      <div className="container bookNow__content">
+        <div className="bookNow__header">
+          <h1 className="bookNow__title">Reserve Your Stay</h1>
+          <p className="bookNow__subtitle">
+            Experience luxury at Hotel Royal Blue Star
+          </p>
+        </div>
+
+        <div className="bookNow__progress">
+          <div className="bookNow__progress-track">
+            <div className="bookNow__progress-bar" ref={progressBar}>
+              <span className="bookNow__progress-text">25%</span>
+            </div>
+          </div>
+          <div className="bookNow__progress-steps">
+            <div className="bookNow__progress-step active">
+              <div className="bookNow__step-icon">1</div>
+              <span>Dates</span>
+            </div>
+            <div className="bookNow__progress-step">
+              <div className="bookNow__step-icon">2</div>
+              <span>Guests & Rooms</span>
+            </div>
+            <div className="bookNow__progress-step">
+              <div className="bookNow__step-icon">3</div>
+              <span>Details</span>
+            </div>
+            <div className="bookNow__progress-step">
+              <div className="bookNow__step-icon">4</div>
+              <span>Confirmation</span>
+            </div>
           </div>
         </div>
-        <form className="mt-5" onSubmit={(e) => handleSubmit(e)}>
-          {/* <button className="button mt-4 w-100">Book Now</button> */}
 
-          {/* ---------------------------First Stage------------------------------------------ */}
-          {/* ---------------------------First Stage------------------------------------------ */}
-          {/* ---------------------------First Stage------------------------------------------ */}
-          {/* ---------------------------First Stage------------------------------------------ */}
-          {/* ---------------------------First Stage------------------------------------------ */}
-          {/* ---------------------------First Stage------------------------------------------ */}
-          {/* ---------------------------First Stage------------------------------------------ */}
-          <div className="first" ref={firstStage}>
-            <div className="mt-4 row">
-              <div className="col-md-3">
-                <label htmlFor="check_in" className="bookNow__form__label">
+        <form className="bookNow__form" onSubmit={(e) => handleSubmit(e)}>
+          {/* First Stage - Dates */}
+          <div className="bookNow__stage" ref={firstStage}>
+            <div className="bookNow__stage-header">
+              <h2>Select Your Dates</h2>
+              <p>Choose your check-in and check-out dates</p>
+            </div>
+
+            <div className="bookNow__form-grid">
+              <div className="bookNow__input-group">
+                <label htmlFor="check_in" className="bookNow__label">
+                  <span className="bookNow__label-icon">📅</span>
                   Check In
                 </label>
-                <input
-                  ref={checkInRef}
-                  type="date"
-                  id="check_in"
-                  className="form-control"
-                  value={checkIn}
-                  onChange={(e) => {
-                    setCheckIn(e.target.value);
-                  }}
-                />
+                <div className="bookNow__input-wrapper">
+                  <input
+                    ref={checkInRef}
+                    type="date"
+                    id="check_in"
+                    className="bookNow__input"
+                    value={checkIn}
+                    onChange={(e) => setCheckIn(e.target.value)}
+                    min={new Date().toISOString().split("T")[0]}
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
               </div>
-              <div className="col-md-3">
-                <label htmlFor="check_out" className="bookNow__form__label">
+
+              <div className="bookNow__input-group">
+                <label htmlFor="check_out" className="bookNow__label">
+                  <span className="bookNow__label-icon">📅</span>
                   Check Out
                 </label>
-                <input
-                  ref={checkOutRef}
-                  type="date"
-                  id="check_out"
-                  className="form-control"
-                  value={checkOut}
-                  onChange={(e) => {
-                    setCheckOut(e.target.value);
-                  }}
-                />
+                <div className="bookNow__input-wrapper">
+                  <input
+                    ref={checkOutRef}
+                    type="date"
+                    id="check_out"
+                    className="bookNow__input"
+                    value={checkOut}
+                    onChange={(e) => setCheckOut(e.target.value)}
+                    min={checkIn || new Date().toISOString().split("T")[0]}
+                    disabled={!checkIn}
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
               </div>
             </div>
-            <button onClick={() => changeStage(1, 2)} className="button mt-4">
-              Next
-            </button>
+
+            <div className="bookNow__stage-actions">
+              <button
+                type="button"
+                className="bookNow__button bookNow__button--primary"
+                onClick={() => changeStage(1, 2)}
+              >
+                Continue to Guests & Rooms
+                <span className="bookNow__button-arrow">→</span>
+              </button>
+            </div>
           </div>
 
-          {/* ---------------------------------Second Stage--------------------------------- */}
-          {/* ---------------------------------Second Stage--------------------------------- */}
-          {/* ---------------------------------Second Stage--------------------------------- */}
-          {/* ---------------------------------Second Stage--------------------------------- */}
-          {/* ---------------------------------Second Stage--------------------------------- */}
-          <div className="second d-none" ref={secondStage}>
-            <div className="row mt-4">
-              <div className="col-md-3">
-                <label htmlFor="adult" className="bookNow__form__label">
-                  Adult (age: 12+)
-                </label>
-                <input
-                  type="number"
-                  id="adult"
-                  className="form-control"
-                  value={adult}
-                  onChange={(e) => setAdult(e.target.value)}
-                />
-              </div>
-              <div className="col-md-3">
-                <label htmlFor="child" className="bookNow__form__label">
-                  Child ( age: 4-11)
-                </label>
-                <input
-                  type="number"
-                  id="child"
-                  className="form-control"
-                  value={child}
-                  onChange={(e) => setChild(e.target.value)}
-                />
-              </div>
+          {/* Second Stage - Guests & Rooms */}
+          <div className="bookNow__stage d-none" ref={secondStage}>
+            <div className="bookNow__stage-header">
+              <h2>Guests & Room Selection</h2>
+              {/* <p>Tell us about your party and room preferences</p> */}
             </div>
 
-            <h4 className="text-center mt-5 bookNow__form__subTitle">Rooms</h4>
-            <div className="row mt-3">
-              <div className="col-md-4">
-                <label htmlFor="rooms" className="bookNow__form__label">
-                  Guest
+            {/* <div className="bookNow__form-grid">
+              <div className="bookNow__input-group">
+                <label htmlFor="adult" className="bookNow__label">
+                  <span className="bookNow__label-icon">👨‍👩‍👧‍👦</span>
+                  Adults (12+ years)
                 </label>
-                <input
-                  type="number"
-                  id="guest"
-                  className="form-control"
-                  value={guest}
-                  onChange={(e) => setGuest(e.target.value)}
-                />
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="number"
+                    id="adult"
+                    className="bookNow__input"
+                    value={adult}
+                    onChange={(e) => setAdult(e.target.value)}
+                    min="1"
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
               </div>
 
-              <div className="col-md-4">
-                <label htmlFor="rooms" className="bookNow__form__label">
-                  Rooms
+              <div className="bookNow__input-group">
+                <label htmlFor="child" className="bookNow__label">
+                  <span className="bookNow__label-icon">🧒</span>
+                  Children (4-11 years)
                 </label>
-                <input
-                  type="number"
-                  id="rooms"
-                  className="form-control"
-                  value={room}
-                  onChange={(e) => setRoom(e.target.value)}
-                />
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="number"
+                    id="child"
+                    className="bookNow__input"
+                    value={child}
+                    onChange={(e) => setChild(e.target.value)}
+                    min="0"
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
               </div>
-              <div className="col-md-4">
-                <label htmlFor="room_type" className="bookNow__form__label">
-                  Room type
+
+              <div className="bookNow__input-group">
+                <label htmlFor="guest" className="bookNow__label">
+                  <span className="bookNow__label-icon">👥</span>
+                  Total Guests
                 </label>
-                <select
-                  className="form-control"
-                  id="room_type"
-                  value={selectedRoomId}
-                  onChange={(e) => {
-                    setSelectedRoomId(e.target.value);
-                    const found = allRooms.find(
-                      (r) => r._id === e.target.value
-                    );
-                    setRoomType(found ? found.type : "");
-                  }}
-                >
-                  <option value="">Select a room</option>
-                  {allRooms.map((room) => (
-                    <option value={room._id} key={room._id}>
-                      {room.name} ({room.type}) - ${room.rentPerDay}/night
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="number"
+                    id="guest"
+                    className="bookNow__input"
+                    value={guest}
+                    onChange={(e) => setGuest(e.target.value)}
+                    min="1"
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
+              </div>
+
+              <div className="bookNow__input-group">
+                <label htmlFor="rooms" className="bookNow__label">
+                  <span className="bookNow__label-icon">🛏️</span>
+                  Rooms Needed
+                </label>
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="number"
+                    id="rooms"
+                    className="bookNow__input"
+                    value={room}
+                    onChange={(e) => setRoom(e.target.value)}
+                    min="1"
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
+              </div>
+
+              <div className="bookNow__input-group bookNow__input-group--full">
+                <label htmlFor="room_type" className="bookNow__label">
+                  <span className="bookNow__label-icon">⭐</span>
+                  Room Type
+                </label>
+                <div className="bookNow__select-wrapper">
+                  <select
+                    className="bookNow__select"
+                    id="room_type"
+                    value={selectedRoomId}
+                    onChange={(e) => {
+                      setSelectedRoomId(e.target.value);
+                      const found = allRooms.find(
+                        (r) => r._id === e.target.value
+                      );
+                      setRoomType(found ? found.type : "");
+                    }}
+                    disabled={roomsLoading}
+                  >
+                    <option value="">
+                      {roomsLoading ? "Loading rooms..." : "Select a room type"}
                     </option>
-                  ))}
-                </select>
+                    {!roomsLoading && allRooms.length === 0 && (
+                      <option value="" disabled>
+                        No rooms available
+                      </option>
+                    )}
+                    {allRooms.map((room) => (
+                      <option value={room._id} key={room._id}>
+                        {room.name} ({room.type}) - ₹{room.rentPerDay}/night
+                      </option>
+                    ))}
+                  </select>
+                  <div className="bookNow__select-arrow">▼</div>
+                </div>
               </div>
-              <div className="col-md-4 d-flex align-items-center justify-content-center">
-                <button type="button" className="btn btn-primary mr-2">
-                  Add
-                </button>
-                <button type="button" className="btn btn-outline-primary">
-                  Remove
-                </button>
-              </div>
+            </div> */}
+
+            <div className="bookNow__stage-actions">
+              <button
+                type="button"
+                className="bookNow__button bookNow__button--secondary"
+                onClick={() => changeStage(2, 1)}
+              >
+                ← Back to Dates
+              </button>
+              {/* <button
+                type="button"
+                className="bookNow__button bookNow__button--primary"
+                onClick={() => changeStage(2, 3)}
+              >
+                Continue to Details
+                <span className="bookNow__button-arrow">→</span>
+              </button> */}
+              <button
+                type="button"
+                className="bookNow__button bookNow__button--outline"
+                onClick={checkRoomsAndRates}
+              >
+                Check Rooms & Rates
+              </button>
             </div>
-            <button onClick={() => changeStage(2, 1)} className="button mt-4">
-              Previous
-            </button>
-            <button onClick={() => changeStage(2, 3)} className="button mt-4">
-              Next
-            </button>
-            <button onClick={checkRoomsAndRates} className="button mt-4">
-              Check Rooms and Rates
-            </button>
           </div>
 
-          {/* --------------------------------Third Stage---------------------------------- */}
-          {/* --------------------------------Third Stage---------------------------------- */}
-          {/* --------------------------------Third Stage---------------------------------- */}
-          {/* --------------------------------Third Stage---------------------------------- */}
-          {/* --------------------------------Third Stage---------------------------------- */}
-          <div className="third d-none" ref={thirdStage}>
-            <div className="row">
-              <div className="col-md-3">
-                <label htmlFor="full_name" className="bookNow__form__label">
+          {/* Third Stage - Details */}
+          <div className="bookNow__stage d-none" ref={thirdStage}>
+            <div className="bookNow__stage-header">
+              <h2>Your Information</h2>
+              <p>We'll use this to confirm your reservation</p>
+            </div>
+
+            {/* <div className="bookNow__form-grid">
+              <div className="bookNow__input-group">
+                <label htmlFor="full_name" className="bookNow__label">
+                  <span className="bookNow__label-icon">👤</span>
                   Full Name
                 </label>
-                <input
-                  type="text"
-                  id="full_name"
-                  className="form-control"
-                  value={name || ""}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                />
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="text"
+                    id="full_name"
+                    className="bookNow__input"
+                    value={name || ""}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Enter your full name"
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
               </div>
-              <div className="col-md-3">
-                <label htmlFor="email" className="bookNow__form__label">
-                  Email
+
+              <div className="bookNow__input-group">
+                <label htmlFor="email" className="bookNow__label">
+                  <span className="bookNow__label-icon">📧</span>
+                  Email Address
                 </label>
-                <input
-                  type="text"
-                  id="email"
-                  className="form-control"
-                  value={email || ""}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                />
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="email"
+                    id="email"
+                    className="bookNow__input"
+                    value={email || ""}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your.email@example.com"
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
               </div>
-              <div className="col-md-3">
-                <label htmlFor="phone" className="bookNow__form__label">
-                  Phone (09XXXXXXXX)
+
+              <div className="bookNow__input-group">
+                <label htmlFor="phone" className="bookNow__label">
+                  <span className="bookNow__label-icon">📱</span>
+                  Phone Number
                 </label>
-                <input
-                  type="text"
-                  id="phone"
-                  className="form-control"
-                  value={phone || ""}
-                  onChange={(e) => {
-                    setPhone(e.target.value);
-                  }}
-                />
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="tel"
+                    id="phone"
+                    className="bookNow__input"
+                    value={phone || ""}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="10-digit phone number"
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
               </div>
-              <div className="col-md-3">
-                <label htmlFor="country" className="bookNow__form__label">
+
+              <div className="bookNow__input-group">
+                <label htmlFor="country" className="bookNow__label">
+                  <span className="bookNow__label-icon">🌎</span>
                   Country
                 </label>
-                <select
-                  className="form-control"
-                  id="country"
-                  value={country || ""}
-                  onChange={(e) => {
-                    setCountry(e.target.value);
-                  }}
-                >
-                  {countryList.map((country) => (
-                    <option value={country.code} key={country.code}>
-                      {country.name}
-                    </option>
-                  ))}
-                </select>
+                <div className="bookNow__select-wrapper">
+                  <select
+                    className="bookNow__select"
+                    id="country"
+                    value={country || ""}
+                    onChange={(e) => setCountry(e.target.value)}
+                  >
+                    <option value="">Select your country</option>
+                    {countryList.map((country) => (
+                      <option value={country.code} key={country.code}>
+                        {country.name}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="bookNow__select-arrow">▼</div>
+                </div>
               </div>
-            </div>
 
-            <div className="row mt-4">
-              <div className="col-md-3">
-                <label htmlFor="full_name" className="bookNow__form__label">
-                  Address
+              <div className="bookNow__input-group bookNow__input-group--full">
+                <label htmlFor="address" className="bookNow__label">
+                  <span className="bookNow__label-icon">🏠</span>
+                  Street Address
                 </label>
-                <input
-                  type="text"
-                  id="address"
-                  className="form-control"
-                  value={address || ""}
-                  onChange={(e) => {
-                    setAddress(e.target.value);
-                  }}
-                />
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="text"
+                    id="address"
+                    className="bookNow__input"
+                    value={address || ""}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder="Your street address"
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
               </div>
-              <div className="col-md-3">
-                <label htmlFor="email" className="bookNow__form__label">
-                  Address 2
+
+              <div className="bookNow__input-group">
+                <label htmlFor="address2" className="bookNow__label">
+                  <span className="bookNow__label-icon">🏢</span>
+                  Address Line 2
                 </label>
-                <input
-                  type="text"
-                  id="address2"
-                  className="form-control"
-                  value={address2 || ""}
-                  onChange={(e) => {
-                    setAddress2(e.target.value);
-                  }}
-                />
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="text"
+                    id="address2"
+                    className="bookNow__input"
+                    value={address2 || ""}
+                    onChange={(e) => setAddress2(e.target.value)}
+                    placeholder="Apartment, suite, etc."
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
               </div>
-              <div className="col-md-3">
-                <label htmlFor="phone" className="bookNow__form__label">
-                  ZIP Code
-                </label>
-                <input
-                  type="text"
-                  id="zip"
-                  className="form-control"
-                  value={zip || ""}
-                  onChange={(e) => {
-                    setZip(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="col-md-3">
-                <label htmlFor="phone" className="bookNow__form__label">
+
+              <div className="bookNow__input-group">
+                <label htmlFor="city" className="bookNow__label">
+                  <span className="bookNow__label-icon">🏙️</span>
                   City
                 </label>
-                <input
-                  type="text"
-                  id="city"
-                  className="form-control"
-                  value={city || ""}
-                  onChange={(e) => {
-                    setCity(e.target.value);
-                  }}
-                />
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="text"
+                    id="city"
+                    className="bookNow__input"
+                    value={city || ""}
+                    onChange={(e) => setCity(e.target.value)}
+                    placeholder="Your city"
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
               </div>
-            </div>
 
-            <div className="row mt-3">
-              <div className="col-md-3">
-                <label htmlFor="phone" className="bookNow__form__label">
+              <div className="bookNow__input-group">
+                <label htmlFor="state" className="bookNow__label">
+                  <span className="bookNow__label-icon">🗺️</span>
                   State
                 </label>
-                <input
-                  type="text"
-                  id="state"
-                  className="form-control"
-                  value={state || ""}
-                  onChange={(e) => {
-                    setState(e.target.value);
-                  }}
-                />
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="text"
+                    id="state"
+                    className="bookNow__input"
+                    value={state || ""}
+                    onChange={(e) => setState(e.target.value)}
+                    placeholder="Your state"
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
               </div>
-            </div>
 
-            <button onClick={() => changeStage(3, 2)} className="button mt-4">
-              Previous
-            </button>
-            <button
-              onClick={async (e) => {
-                e.preventDefault();
-                await bookRoom();
-              }}
-              className="button mt-4"
-              disabled={bookingLoading}
-            >
-              {bookingLoading ? "Booking..." : "Book"}
-            </button>
+              <div className="bookNow__input-group">
+                <label htmlFor="zip" className="bookNow__label">
+                  <span className="bookNow__label-icon">📮</span>
+                  ZIP Code
+                </label>
+                <div className="bookNow__input-wrapper">
+                  <input
+                    type="text"
+                    id="zip"
+                    className="bookNow__input"
+                    value={zip || ""}
+                    onChange={(e) => setZip(e.target.value)}
+                    placeholder="ZIP or postal code"
+                  />
+                  <div className="bookNow__input-decoration"></div>
+                </div>
+              </div>
+            </div> */}
+
+            {/* <div className="bookNow__stage-actions">
+              <button
+                type="button"
+                className="bookNow__button bookNow__button--secondary"
+                onClick={() => changeStage(3, 2)}
+              >
+                ← Back to Guests & Rooms
+              </button>
+              <button
+                type="button"
+                className="bookNow__button bookNow__button--primary"
+                onClick={bookRoom}
+                disabled={bookingLoading}
+              >
+                {bookingLoading ? (
+                  <>
+                    <span className="bookNow__button-spinner"></span>
+                    Processing...
+                  </>
+                ) : (
+                  "Complete Reservation"
+                )}
+              </button>
+            </div> */}
           </div>
-          <div ref={fourthStage} className="fourth d-none">
-            <div className="d-flex align-items-center justify-content-center">
-              <i className="fas fa-check bookNow__check"></i>
+
+          {/* Fourth Stage - Confirmation */}
+          {/* <div className="bookNow__stage d-none" ref={fourthStage}>
+            <div className="bookNow__success">
+              <div className="bookNow__success-icon">✓</div>
+              <h2>Reservation Confirmed!</h2>
+              <p>
+                Your room has been successfully booked. You will receive a
+                confirmation email shortly.
+              </p>
+              <button
+                type="button"
+                className="bookNow__button bookNow__button--primary"
+                onClick={() => history.push("/")}
+              >
+                Return to Home
+              </button>
             </div>
-            <h4 className="text-center bookNow__done mt-3">Room Booked</h4>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

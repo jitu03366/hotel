@@ -1,43 +1,436 @@
+/* BookNow.css */
+
 .bookNow {
   width: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url(../../style/img/bedroom.jpg);
+  min-height: 100vh;
+  position: relative;
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.bookNow__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(10, 36, 88, 0.9) 0%, rgba(166, 136, 55, 0.8) 100%),
+              url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  z-index: -1;
+}
+
+.bookNow__content {
+  max-width: 1000px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  margin: 2rem;
+}
+
+.bookNow__header {
+  text-align: center;
+  margin-bottom: 2.5rem;
 }
 
 .bookNow__title {
-  font-family: Poppins Black;
-  font-size: 50px;
-  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0a2458;
+  margin-bottom: 0.5rem;
 }
 
-.bookNow__form__label {
-  color: #fff;
-  font-family: Poppins Regular;
+.bookNow__subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  font-weight: 400;
 }
 
-/* .bookNow form .form-control {
-  background: transparent !important;
-  color: #fff;
-} */
-
-.bookNow form option {
-  color: #000;
+/* Progress Bar */
+.bookNow__progress {
+  margin-bottom: 2.5rem;
 }
 
-.bookNow__form__subTitle {
-  font-family: Poppins Black;
-  color: #fff;
+.bookNow__progress-track {
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
 }
 
-.bookNow__check {
-  font-size: 40px;
-  color: #fff;
+.bookNow__progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #0a2458, #d4af37);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+  position: relative;
 }
 
-.bookNow__done {
-  color: #fff;
-  font-family: Poppins Black;
+.bookNow__progress-text {
+  position: absolute;
+  right: 10px;
+  top: -25px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0a2458;
+}
+
+.bookNow__progress-steps {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.bookNow__progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.bookNow__step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.bookNow__progress-step.active .bookNow__step-icon {
+  background: #0a2458;
+  color: white;
+  box-shadow: 0 0 0 4px rgba(10, 36, 88, 0.2);
+}
+
+.bookNow__progress-step span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #6c757d;
+}
+
+.bookNow__progress-step.active span {
+  color: #0a2458;
+  font-weight: 600;
+}
+
+/* Form Styling */
+.bookNow__form {
+  width: 100%;
+}
+
+.bookNow__stage {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bookNow__stage-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.bookNow__stage-header h2 {
+  font-size: 1.8rem;
+  color: #0a2458;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.bookNow__stage-header p {
+  color: #666;
+  font-size: 1rem;
+}
+
+.bookNow__form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.bookNow__input-group--full {
+  grid-column: 1 / -1;
+}
+
+.bookNow__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.bookNow__label-icon {
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.bookNow__input-wrapper {
+  position: relative;
+}
+
+.bookNow__input {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+  color: #333;
+}
+
+.bookNow__input:focus {
+  outline: none;
+  border-color: #0a2458;
+  box-shadow: 0 0 0 3px rgba(10, 36, 88, 0.1);
+}
+
+.bookNow__input::placeholder {
+  color: #a0aec0;
+}
+
+.bookNow__input-decoration {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #0a2458, #d4af37);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  border-radius: 0 0 12px 12px;
+}
+
+.bookNow__input:focus ~ .bookNow__input-decoration {
+  transform: scaleX(1);
+}
+
+.bookNow__select-wrapper {
+  position: relative;
+}
+
+.bookNow__select {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  appearance: none;
+  background: white;
+  color: #333;
+  cursor: pointer;
+}
+
+.bookNow__select:focus {
+  outline: none;
+  border-color: #0a2458;
+  box-shadow: 0 0 0 3px rgba(10, 36, 88, 0.1);
+}
+
+.bookNow__select-arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #718096;
+}
+
+/* Buttons */
+.bookNow__stage-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.bookNow__button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+}
+
+.bookNow__button--primary {
+  background: linear-gradient(135deg, #0a2458 0%, #1e40af 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(10, 36, 88, 0.3);
+}
+
+.bookNow__button--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(10, 36, 88, 0.4);
+}
+
+.bookNow__button--secondary {
+  background: #f8f9fa;
+  color: #495057;
+  border: 2px solid #e9ecef;
+}
+
+.bookNow__button--secondary:hover {
+  background: #e9ecef;
+  transform: translateY(-2px);
+}
+
+.bookNow__button--outline {
+  background: transparent;
+  color: #0a2458;
+  border: 2px solid #0a2458;
+}
+
+.bookNow__button--outline:hover {
+  background: #0a2458;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.bookNow__button-arrow {
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.bookNow__button--primary:hover .bookNow__button-arrow {
+  transform: translateX(4px);
+}
+
+.bookNow__button-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Success State */
+.bookNow__success {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.bookNow__success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.bookNow__success h2 {
+  font-size: 2rem;
+  color: #0a2458;
+  margin-bottom: 1rem;
+}
+
+.bookNow__success p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .bookNow__content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .bookNow__title {
+    font-size: 2rem;
+  }
+
+  .bookNow__form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bookNow__stage-actions {
+    flex-direction: column;
+  }
+
+  .bookNow__button {
+    width: 100%;
+  }
+
+  .bookNow__progress-steps {
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .bookNow__progress-step {
+    flex: 1;
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bookNow__content {
+    padding: 1rem;
+  }
+
+  .bookNow__title {
+    font-size: 1.8rem;
+  }
+
+  .bookNow__stage-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .bookNow__input, .bookNow__select {
+    padding: 0.875rem 1rem;
+  }
+}
+
+/* Utility Classes */
+.d-none {
+  display: none !important;
 }

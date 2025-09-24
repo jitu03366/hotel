@@ -18,15 +18,16 @@ const userSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function (v) {
-        return /^09\d{9}$/.test(v); // Matches pattern 09XXXXXXXX
+        return /^[6-9]\d{9}$/.test(v); // Matches Indian mobile numbers
       },
-      message: (props) => `${props.value} is not a valid phone number!`,
+      message: (props) =>
+        `${props.value} is not a valid Indian phone number! Must start with 6-9 and be 10 digits.`,
     },
   },
   address: {
     street: {
       type: String,
-      required: true,
+      //required: true,
       trim: true,
     },
     street2: {
@@ -35,22 +36,22 @@ const userSchema = new mongoose.Schema({
     },
     city: {
       type: String,
-      required: true,
+      //required: true,
       trim: true,
     },
     state: {
       type: String,
-      required: true,
+      // required: true,
       trim: true,
     },
     zip: {
       type: String,
-      required: true,
+      // required: true,
       trim: true,
     },
     country: {
       type: String,
-      required: true,
+      // required: true,
       trim: true,
     },
   },

@@ -8,7 +8,7 @@ const listAllReservations = async (req, res) => {
       .populate("userId")
       .populate("bookingInfo.roomId")
       .sort({ createdAt: -1 });
-
+    console.log("Reservations fetched:", reservations.length, reservations);
     res.status(200).json({
       success: true,
       reservations,

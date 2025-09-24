@@ -153,13 +153,28 @@ const deleteRoom = async (req, res) => {
 // Get available rooms
 const getAvailableRooms = async (req, res) => {
   try {
-    const rooms = await Room.findAvailableRooms();
+    const rooms = await Room.find({ isAvailable: true });
+
+    // Transform the rooms to ensure complete image URLs
+    const transformedRooms = rooms.map((room) => ({
+      ...room._doc,
+      images: room.images.map((image) => {
+        // If the image URL is already complete, return it
+        if (image.startsWith("http")) {
+          return image;
+        }
+        // Otherwise, construct the complete Cloudinary URL
+        return `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/${image}`;
+      }),
+    }));
+
     res.status(200).json({
       success: true,
-      data: rooms,
-      count: rooms.length,
+      data: transformedRooms,
+      count: transformedRooms.length,
     });
   } catch (error) {
+    console.error("Error fetching available rooms:", error);
     res.status(500).json({
       success: false,
       message: error.message,

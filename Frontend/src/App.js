@@ -23,6 +23,11 @@ import Booking from "./pages/Admin/Booking/Booking";
 import Payment from "./pages/Payment/Payment";
 import Receipt from "./pages/Payment/Receipt";
 import PendingPayment from "./pages/Payment/PendingPayment";
+import PrivacyPolicy from "./pages/Legal/PrivacyPolicy";
+import TermsAndConditions from "./pages/Legal/TermsAndConditions";
+import CancellationAndRefund from "./pages/Legal/CancellationAndRefund";
+import ShippingAndDelivery from "./pages/Legal/ShippingAndDelivery";
+import ContactUs from "./pages/Legal/ContactUs";
 
 function App() {
   const [state, dispatch] = useStateValue();
@@ -71,6 +76,11 @@ function App() {
         <Route exact path="/payment" component={Payment} />
         <Route exact path="/receipt" component={Receipt} />
         <Route exact path="/pending-payment" component={PendingPayment} />
+        <Route exact path="/privacy-policy" component={PrivacyPolicy} />
+        <Route exact path="/terms-and-conditions" component={TermsAndConditions} />
+        <Route exact path="/cancellation-and-refund" component={CancellationAndRefund} />
+        <Route exact path="/shipping-and-delivery" component={ShippingAndDelivery} />
+        <Route exact path="/contact-us" component={ContactUs} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/room/:id" component={Room} />
 

@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/static/css/main.008c152a.css",
+    "main.js": "/static/js/main.9d9499af.js",
+    "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
+    "static/media/fa-solid-900.svg": "/static/media/fa-solid-900.5530cbd1cc5c83303f2b.svg",
+    "static/media/fa-brands-400.svg": "/static/media/fa-brands-400.41160d4c4ff6fc3bd7be.svg",
+    "static/media/location.png": "/static/media/location.02ea6b171eec7ae21ddf.png",
+    "static/media/fa-solid-900.eot": "/static/media/fa-solid-900.ab3ef4abdaedeced5219.eot",
+    "static/media/fa-solid-900.ttf": "/static/media/fa-solid-900.6e617fd4bfae0ebd495b.ttf",
+    "static/media/fa-regular-400.svg": "/static/media/fa-regular-400.065cf9585e151cf17e39.svg",
+    "static/media/fa-brands-400.eot": "/static/media/fa-brands-400.46c13076acbc82aac893.eot",
+    "static/media/fa-brands-400.ttf": "/static/media/fa-brands-400.131054e1a15e8c1a2be9.ttf",
+    "static/media/showcase.jpg": "/static/media/showcase.d6470cf130b333d660e6.jpg",
+    "static/media/bedroom.jpg": "/static/media/bedroom.4c623f008ca02d54aea2.jpg",
+    "static/media/fa-solid-900.woff": "/static/media/fa-solid-900.1bdf103cf1d2f4875cb4.woff",
+    "static/media/gym.jpg": "/static/media/gym.7fbec631927b3c37fe79.jpg",
+    "static/media/fa-brands-400.woff": "/static/media/fa-brands-400.d87ca79c4938f3ca66cb.woff",
+    "static/media/booking.jpg": "/static/media/booking.84ba3258ac859c3b8961.jpg",
+    "static/media/fa-solid-900.woff2": "/static/media/fa-solid-900.f2d8806e4ac0d7a6e72f.woff2",
+    "static/media/fa-brands-400.woff2": "/static/media/fa-brands-400.2ffc1f5b1909c172f239.woff2",
+    "static/media/food.jpg": "/static/media/food.f6398556c0940a6075e8.jpg",
+    "static/media/lobby.jpg": "/static/media/lobby.cd024015141b6d6c2e8d.jpg",
+    "static/media/delivery.jpg": "/static/media/delivery.dde3ec1a321fe6ceb3a0.jpg",
+    "static/media/fa-regular-400.eot": "/static/media/fa-regular-400.59f4a1ec50a2e39950ae.eot",
+    "static/media/reception.jpg": "/static/media/reception.37340e538dbc5b549274.jpg",
+    "static/media/fa-regular-400.ttf": "/static/media/fa-regular-400.8ce738c3de1f5af6f0db.ttf",
+    "static/media/fa-regular-400.woff": "/static/media/fa-regular-400.aee72cf0a11239dba36c.woff",
+    "static/media/fa-regular-400.woff2": "/static/media/fa-regular-400.6462b09d97cb0149ec02.woff2",
+    "index.html": "/index.html",
+    "main.008c152a.css.map": "/static/css/main.008c152a.css.map",
+    "main.9d9499af.js.map": "/static/js/main.9d9499af.js.map",
+    "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.008c152a.css",
+    "static/js/main.9d9499af.js"
+  ]
+}
