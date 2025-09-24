@@ -19,9 +19,8 @@ function About() {
             Welcome to{" "}
             <strong className="about__highlight">Hotel Royal Blue Star</strong>,
             the rising guest house and banquet hall of North Bihar. Conveniently
-            located in Muzaffarpur, near SKMCH overbridge in front of the petrol
-            pump (842001), our hotel offers comfort and elegance at the heart of
-            the city.
+            located in Muzaffarpur, near Bariya Golambar (842001), our hotel
+            offers comfort and elegance at the heart of the city.
           </p>
 
           <div className="about__divider">

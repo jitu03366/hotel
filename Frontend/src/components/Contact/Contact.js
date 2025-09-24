@@ -92,9 +92,7 @@ function Contact() {
             <div className="info-item">
               <div className="info-icon">📍</div>
               <div className="info-text">
-                Near SKMCH Overbridge,
-                <br />
-                In front of Petrol Pump,
+                Near Bariya Golambar ,
                 <br />
                 Muzaffarpur, Bihar 842001
               </div>
@@ -103,16 +101,16 @@ function Contact() {
             <div className="info-item">
               <div className="info-icon">📞</div>
               <div className="info-text">
-                +91 XXXXX XXXXX
+                +91 9031370046
                 <br />
-                +91 XXXXX XXXXX
+                +91 620 225 5555
               </div>
             </div>
 
             <div className="info-item">
               <div className="info-icon">✉️</div>
               <div className="info-text">
-                info@hotelroyalbluestar.com
+                hotelroyalbluestar@gmail.com
                 <br />
                 bookings@hotelroyalbluestar.com
               </div>
