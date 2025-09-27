@@ -1,5 +1,5 @@
-import React from 'react';
-import './Legal.css';
+import React from "react";
+import "./Legal.css";
 
 const CancellationAndRefund = () => {
   return (
@@ -9,25 +9,40 @@ const CancellationAndRefund = () => {
           <div className="col-lg-8">
             <div className="legal-content">
               <h1 className="legal-title">Cancellation and Refund Policy</h1>
-              <p className="legal-updated">Last updated: {new Date().toLocaleDateString()}</p>
-              
+              <p className="legal-updated">
+                Last updated: {new Date().toLocaleDateString()}
+              </p>
+
               <section className="legal-section">
                 <h2>1. General Cancellation Policy</h2>
-                <p>We understand that plans can change. Our cancellation policy is designed to be fair to both our guests and our hotel partners.</p>
-                
+                <p>
+                  We understand that plans can change. Our cancellation policy
+                  is designed to be fair to both our guests and our hotel
+                  partners.
+                </p>
+
                 <div className="policy-highlight">
                   <h3>Standard Cancellation Terms</h3>
                   <ul>
-                    <li><strong>Free Cancellation:</strong> Up to 24 hours before check-in</li>
-                    <li><strong>Partial Refund:</strong> 50% refund for cancellations within 24 hours</li>
-                    <li><strong>No Refund:</strong> For no-shows or same-day cancellations</li>
+                    <li>
+                      <strong>Free Cancellation:</strong> Up to 24 hours before
+                      check-in
+                    </li>
+                    <li>
+                      <strong>Partial Refund:</strong> 50% refund for
+                      cancellations within 24 hours
+                    </li>
+                    <li>
+                      <strong>No Refund:</strong> For no-shows or same-day
+                      cancellations
+                    </li>
                   </ul>
                 </div>
               </section>
 
               <section className="legal-section">
                 <h2>2. Booking Types and Cancellation Rules</h2>
-                
+
                 <h3>2.1 Standard Bookings</h3>
                 <ul>
                   <li>Free cancellation up to 24 hours before check-in</li>
@@ -37,7 +52,10 @@ const CancellationAndRefund = () => {
 
                 <h3>2.2 Non-Refundable Bookings</h3>
                 <ul>
-                  <li>These bookings offer discounted rates but cannot be cancelled</li>
+                  <li>
+                    These bookings offer discounted rates but cannot be
+                    cancelled
+                  </li>
                   <li>No refunds under any circumstances</li>
                   <li>Clearly marked during the booking process</li>
                 </ul>
@@ -59,13 +77,21 @@ const CancellationAndRefund = () => {
 
               <section className="legal-section">
                 <h2>3. Refund Processing</h2>
-                
+
                 <h3>3.1 Refund Timeline</h3>
                 <ul>
-                  <li><strong>Credit Card:</strong> 5-10 business days</li>
-                  <li><strong>Debit Card:</strong> 7-14 business days</li>
-                  <li><strong>Bank Transfer:</strong> 10-15 business days</li>
-                  <li><strong>Digital Wallets:</strong> 1-3 business days</li>
+                  <li>
+                    <strong>Credit Card:</strong> 5-10 business days
+                  </li>
+                  <li>
+                    <strong>Debit Card:</strong> 7-14 business days
+                  </li>
+                  <li>
+                    <strong>Bank Transfer:</strong> 10-15 business days
+                  </li>
+                  <li>
+                    <strong>Digital Wallets:</strong> 1-3 business days
+                  </li>
                 </ul>
 
                 <h3>3.2 Refund Method</h3>
@@ -78,12 +104,17 @@ const CancellationAndRefund = () => {
 
               <section className="legal-section">
                 <h2>4. Special Circumstances</h2>
-                
+
                 <h3>4.1 Force Majeure Events</h3>
-                <p>In case of natural disasters, government restrictions, or other force majeure events, we will work with you to:</p>
+                <p>
+                  In case of natural disasters, government restrictions, or
+                  other force majeure events, we will work with you to:
+                </p>
                 <ul>
                   <li>Reschedule your booking at no additional cost</li>
-                  <li>Provide full refunds when rescheduling is not possible</li>
+                  <li>
+                    Provide full refunds when rescheduling is not possible
+                  </li>
                   <li>Offer credit for future bookings</li>
                 </ul>
 
@@ -96,7 +127,10 @@ const CancellationAndRefund = () => {
                 </ul>
 
                 <h3>4.3 Hotel Issues</h3>
-                <p>If the hotel cannot honor your reservation due to their issues:</p>
+                <p>
+                  If the hotel cannot honor your reservation due to their
+                  issues:
+                </p>
                 <ul>
                   <li>Full refund guaranteed</li>
                   <li>Assistance finding alternative accommodations</li>
@@ -106,11 +140,11 @@ const CancellationAndRefund = () => {
 
               <section className="legal-section">
                 <h2>5. How to Cancel</h2>
-                
+
                 <h3>5.1 Online Cancellation</h3>
                 <ul>
                   <li>Log into your account</li>
-                  <li>Go to "My Bookings"</li>
+                  <li>Go to &quot;My Bookings&quot;</li>
                   <li>Select the booking to cancel</li>
                   <li>Follow the cancellation prompts</li>
                 </ul>
@@ -132,7 +166,9 @@ const CancellationAndRefund = () => {
 
               <section className="legal-section">
                 <h2>6. Refund Exceptions</h2>
-                <p>The following situations may affect your refund eligibility:</p>
+                <p>
+                  The following situations may affect your refund eligibility:
+                </p>
                 <ul>
                   <li>Fraudulent bookings or payment disputes</li>
                   <li>Violation of hotel policies</li>
@@ -146,7 +182,9 @@ const CancellationAndRefund = () => {
                 <ul>
                   <li>No fees for standard cancellations</li>
                   <li>Processing fees may apply for certain payment methods</li>
-                  <li>Currency conversion fees may apply for international refunds</li>
+                  <li>
+                    Currency conversion fees may apply for international refunds
+                  </li>
                   <li>Fees will be clearly disclosed before processing</li>
                 </ul>
               </section>
@@ -166,16 +204,29 @@ const CancellationAndRefund = () => {
                 <h2>9. Contact Information</h2>
                 <p>For cancellation and refund inquiries:</p>
                 <div className="contact-info">
-                  <p><strong>Customer Service:</strong> +1 (555) 123-4567</p>
-                  <p><strong>Email:</strong> support@hotelbooking.com</p>
-                  <p><strong>Refund Inquiries:</strong> refunds@hotelbooking.com</p>
-                  <p><strong>Business Hours:</strong> 24/7 for urgent matters</p>
+                  <p>
+                    <strong>Customer Service:</strong> +1 (555) 123-4567
+                  </p>
+                  <p>
+                    <strong>Email:</strong> support@hotelbooking.com
+                  </p>
+                  <p>
+                    <strong>Refund Inquiries:</strong> refunds@hotelbooking.com
+                  </p>
+                  <p>
+                    <strong>Business Hours:</strong> 24/7 for urgent matters
+                  </p>
                 </div>
               </section>
 
               <section className="legal-section">
                 <h2>10. Policy Updates</h2>
-                <p>This cancellation and refund policy may be updated from time to time. Any changes will be posted on this page with an updated revision date. We encourage you to review this policy periodically.</p>
+                <p>
+                  This cancellation and refund policy may be updated from time
+                  to time. Any changes will be posted on this page with an
+                  updated revision date. We encourage you to review this policy
+                  periodically.
+                </p>
               </section>
             </div>
           </div>

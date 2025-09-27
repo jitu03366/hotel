@@ -10,6 +10,8 @@ import { useStateValue } from "../../../context/StateProvider";
 import { actionTypes } from "../../../context/reducer";
 import "./CreateRoom.css";
 
+import PropTypes from 'prop-types';
+
 function EditRoom(props) {
   const [state, dispatch] = useStateValue();
   const history = useHistory();
@@ -499,3 +501,10 @@ function EditRoom(props) {
 }
 
 export default EditRoom;
+EditRoom.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};

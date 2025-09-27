@@ -35,8 +35,8 @@ function Contact() {
         <h1 className="contact-title">Get In Touch</h1>
         <div className="contact-divider"></div>
         <p className="contact-subtitle">
-          We'd love to hear from you. Reach out to us for bookings, inquiries,
-          or any assistance you may need.
+          We&apos;d love to hear from you. Reach out to us for bookings,
+          inquiries, or any assistance you may need.
         </p>
       </div>
 

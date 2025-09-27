@@ -1,5 +1,6 @@
 import React from "react";
 import "./Showcase.css";
+import PropTypes from "prop-types";
 
 function Showcase(props) {
   const handleCallReception = () => {
@@ -80,5 +81,9 @@ function Showcase(props) {
     </div>
   );
 }
+
+Showcase.propTypes = {
+  scrollToBookNow: PropTypes.func,
+};
 
 export default Showcase;

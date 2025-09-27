@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useStateValue } from "../../context/StateProvider";
 import { actionTypes } from "../../context/reducer";
 import "./Navbar.css";
+import PropTypes from "prop-types";
 
 function Navbar(props) {
   const [state, dispatch] = useStateValue();
@@ -120,6 +121,15 @@ function Navbar(props) {
       scroll: props.scrollToAccommodations,
     },
   ];
+  Navbar.propTypes = {
+    scrollToHome: PropTypes.func,
+    scrollToAbout: PropTypes.func,
+    scrollToGallery: PropTypes.func,
+    scrollToContact: PropTypes.func,
+    scrollToRooms: PropTypes.func,
+    scrollToAccommodations: PropTypes.func,
+    scrollToBookNow: PropTypes.func,
+  };
 
   return (
     <div>
@@ -136,31 +146,31 @@ function Navbar(props) {
       {state.navToggled && (
         <div
           style={{
-            position: 'fixed',
+            position: "fixed",
             top: 0,
             left: 0,
-            width: '100%',
-            height: '100%',
-            background: 'rgba(0, 0, 0, 0.8)',
+            width: "100%",
+            height: "100%",
+            background: "rgba(0, 0, 0, 0.8)",
             zIndex: 99999,
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'center'
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
           }}
           onClick={toggleNav}
         >
           <div
             style={{
-              width: '300px',
-              height: '100%',
-              background: 'rgba(10, 10, 10, 0.98)',
-              borderLeft: '1px solid rgba(212, 175, 55, 0.3)',
-              padding: '2rem 1rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '1.5rem'
+              width: "300px",
+              height: "100%",
+              background: "rgba(10, 10, 10, 0.98)",
+              borderLeft: "1px solid rgba(212, 175, 55, 0.3)",
+              padding: "2rem 1rem",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "1.5rem",
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -170,28 +180,28 @@ function Navbar(props) {
                 to={item.name === "home" ? "/" : ""}
                 onClick={() => handleNavClick(item.scroll, item.name)}
                 style={{
-                  display: 'block',
-                  padding: '16px 24px',
-                  color: '#ffffff',
-                  textDecoration: 'none',
-                  fontSize: '18px',
-                  fontWeight: '600',
-                  textAlign: 'center',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  border: '2px solid rgba(212, 175, 55, 0.3)',
-                  borderRadius: '12px',
-                  width: '100%',
-                  transition: 'all 0.3s ease'
+                  display: "block",
+                  padding: "16px 24px",
+                  color: "#ffffff",
+                  textDecoration: "none",
+                  fontSize: "18px",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  background: "rgba(255, 255, 255, 0.1)",
+                  border: "2px solid rgba(212, 175, 55, 0.3)",
+                  borderRadius: "12px",
+                  width: "100%",
+                  transition: "all 0.3s ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.background = 'rgba(212, 175, 55, 0.2)';
-                  e.target.style.borderColor = 'rgba(212, 175, 55, 0.6)';
-                  e.target.style.color = '#ffd700';
+                  e.target.style.background = "rgba(212, 175, 55, 0.2)";
+                  e.target.style.borderColor = "rgba(212, 175, 55, 0.6)";
+                  e.target.style.color = "#ffd700";
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.background = 'rgba(255, 255, 255, 0.1)';
-                  e.target.style.borderColor = 'rgba(212, 175, 55, 0.3)';
-                  e.target.style.color = '#ffffff';
+                  e.target.style.background = "rgba(255, 255, 255, 0.1)";
+                  e.target.style.borderColor = "rgba(212, 175, 55, 0.3)";
+                  e.target.style.color = "#ffffff";
                 }}
               >
                 {item.label}
@@ -201,28 +211,28 @@ function Navbar(props) {
               to=""
               onClick={() => handleNavClick(props.scrollToBookNow, "book")}
               style={{
-                display: 'block',
-                padding: '16px 32px',
-                color: '#000',
-                textDecoration: 'none',
-                fontSize: '18px',
-                fontWeight: '700',
-                textAlign: 'center',
-                background: 'linear-gradient(135deg, #ff9900 0%, #ffcc00 100%)',
-                border: 'none',
-                borderRadius: '50px',
-                width: '100%',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 0 20px rgba(255, 153, 0, 0.7)',
-                marginTop: '1rem'
+                display: "block",
+                padding: "16px 32px",
+                color: "#000",
+                textDecoration: "none",
+                fontSize: "18px",
+                fontWeight: "700",
+                textAlign: "center",
+                background: "linear-gradient(135deg, #ff9900 0%, #ffcc00 100%)",
+                border: "none",
+                borderRadius: "50px",
+                width: "100%",
+                transition: "all 0.3s ease",
+                boxShadow: "0 0 20px rgba(255, 153, 0, 0.7)",
+                marginTop: "1rem",
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-3px) scale(1.05)';
-                e.target.style.boxShadow = '0 10px 25px rgba(255, 153, 0, 0.6)';
+                e.target.style.transform = "translateY(-3px) scale(1.05)";
+                e.target.style.boxShadow = "0 10px 25px rgba(255, 153, 0, 0.6)";
               }}
               onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0) scale(1)';
-                e.target.style.boxShadow = '0 0 20px rgba(255, 153, 0, 0.7)';
+                e.target.style.transform = "translateY(0) scale(1)";
+                e.target.style.boxShadow = "0 0 20px rgba(255, 153, 0, 0.7)";
               }}
             >
               Book Now
@@ -308,15 +318,15 @@ function Navbar(props) {
 
             {/* Mobile Menu Backdrop */}
             {state.navToggled && (
-              <div 
+              <div
                 style={{
-                  position: 'fixed',
+                  position: "fixed",
                   top: 0,
                   left: 0,
-                  width: '100%',
-                  height: '100%',
-                  background: 'rgba(0, 0, 0, 0.8)',
-                  zIndex: 9999
+                  width: "100%",
+                  height: "100%",
+                  background: "rgba(0, 0, 0, 0.8)",
+                  zIndex: 9999,
                 }}
                 onClick={toggleNav}
               />
@@ -324,65 +334,70 @@ function Navbar(props) {
 
             {/* Mobile Menu - Simplified Version */}
             {state.navToggled && (
-              <div 
+              <div
                 className="mobile-menu-container"
                 ref={mobileMenu}
                 style={{
-                  position: 'fixed',
+                  position: "fixed",
                   top: 0,
                   right: 0,
-                  width: '300px',
-                  height: '100vh',
-                  background: 'rgba(10, 10, 10, 0.98)',
+                  width: "300px",
+                  height: "100vh",
+                  background: "rgba(10, 10, 10, 0.98)",
                   zIndex: 10000,
-                  display: 'flex !important',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '2rem 1rem',
-                  borderLeft: '1px solid rgba(212, 175, 55, 0.3)',
-                  backdropFilter: 'blur(30px)',
-                  WebkitBackdropFilter: 'blur(30px)',
-                  visibility: 'visible !important',
-                  opacity: '1 !important'
+                  display: "flex !important",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "2rem 1rem",
+                  borderLeft: "1px solid rgba(212, 175, 55, 0.3)",
+                  backdropFilter: "blur(30px)",
+                  WebkitBackdropFilter: "blur(30px)",
+                  visibility: "visible !important",
+                  opacity: "1 !important",
                 }}
               >
-                <ul style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1.5rem',
-                  width: '100%',
-                  listStyle: 'none',
-                  padding: 0,
-                  margin: 0
-                }}>
+                <ul
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1.5rem",
+                    width: "100%",
+                    listStyle: "none",
+                    padding: 0,
+                    margin: 0,
+                  }}
+                >
                   {navItems.map((item) => (
-                    <li key={item.name} style={{ width: '100%' }}>
+                    <li key={item.name} style={{ width: "100%" }}>
                       <Link
                         to={item.name === "home" ? "/" : ""}
                         onClick={() => handleNavClick(item.scroll, item.name)}
                         style={{
-                          display: 'block',
-                          padding: '16px 24px',
-                          color: '#ffffff',
-                          textDecoration: 'none',
-                          fontSize: '18px',
-                          fontWeight: '600',
-                          textAlign: 'center',
-                          background: 'rgba(255, 255, 255, 0.1)',
-                          border: '2px solid rgba(212, 175, 55, 0.3)',
-                          borderRadius: '12px',
-                          transition: 'all 0.3s ease'
+                          display: "block",
+                          padding: "16px 24px",
+                          color: "#ffffff",
+                          textDecoration: "none",
+                          fontSize: "18px",
+                          fontWeight: "600",
+                          textAlign: "center",
+                          background: "rgba(255, 255, 255, 0.1)",
+                          border: "2px solid rgba(212, 175, 55, 0.3)",
+                          borderRadius: "12px",
+                          transition: "all 0.3s ease",
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.background = 'rgba(212, 175, 55, 0.2)';
-                          e.target.style.borderColor = 'rgba(212, 175, 55, 0.6)';
-                          e.target.style.color = '#ffd700';
+                          e.target.style.background = "rgba(212, 175, 55, 0.2)";
+                          e.target.style.borderColor =
+                            "rgba(212, 175, 55, 0.6)";
+                          e.target.style.color = "#ffd700";
                         }}
                         onMouseLeave={(e) => {
-                          e.target.style.background = 'rgba(255, 255, 255, 0.1)';
-                          e.target.style.borderColor = 'rgba(212, 175, 55, 0.3)';
-                          e.target.style.color = '#ffffff';
+                          e.target.style.background =
+                            "rgba(255, 255, 255, 0.1)";
+                          e.target.style.borderColor =
+                            "rgba(212, 175, 55, 0.3)";
+                          e.target.style.color = "#ffffff";
                         }}
                       >
                         {item.label}
@@ -390,31 +405,37 @@ function Navbar(props) {
                     </li>
                   ))}
                   {/* Book Now Button for Mobile */}
-                  <li style={{ width: '100%', marginTop: '1rem' }}>
+                  <li style={{ width: "100%", marginTop: "1rem" }}>
                     <Link
                       to=""
-                      onClick={() => handleNavClick(props.scrollToBookNow, "book")}
+                      onClick={() =>
+                        handleNavClick(props.scrollToBookNow, "book")
+                      }
                       style={{
-                        display: 'block',
-                        padding: '16px 32px',
-                        color: '#000',
-                        textDecoration: 'none',
-                        fontSize: '18px',
-                        fontWeight: '700',
-                        textAlign: 'center',
-                        background: 'linear-gradient(135deg, #ff9900 0%, #ffcc00 100%)',
-                        border: 'none',
-                        borderRadius: '50px',
-                        transition: 'all 0.3s ease',
-                        boxShadow: '0 0 20px rgba(255, 153, 0, 0.7)'
+                        display: "block",
+                        padding: "16px 32px",
+                        color: "#000",
+                        textDecoration: "none",
+                        fontSize: "18px",
+                        fontWeight: "700",
+                        textAlign: "center",
+                        background:
+                          "linear-gradient(135deg, #ff9900 0%, #ffcc00 100%)",
+                        border: "none",
+                        borderRadius: "50px",
+                        transition: "all 0.3s ease",
+                        boxShadow: "0 0 20px rgba(255, 153, 0, 0.7)",
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.transform = 'translateY(-3px) scale(1.05)';
-                        e.target.style.boxShadow = '0 10px 25px rgba(255, 153, 0, 0.6)';
+                        e.target.style.transform =
+                          "translateY(-3px) scale(1.05)";
+                        e.target.style.boxShadow =
+                          "0 10px 25px rgba(255, 153, 0, 0.6)";
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.transform = 'translateY(0) scale(1)';
-                        e.target.style.boxShadow = '0 0 20px rgba(255, 153, 0, 0.7)';
+                        e.target.style.transform = "translateY(0) scale(1)";
+                        e.target.style.boxShadow =
+                          "0 0 20px rgba(255, 153, 0, 0.7)";
                       }}
                     >
                       Book Now

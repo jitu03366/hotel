@@ -5,6 +5,8 @@ import axios from "../../axios";
 
 import "./Room.css";
 
+import PropTypes from "prop-types";
+
 function Room(props) {
   const [details, setDetails] = useState();
 
@@ -30,7 +32,7 @@ function Room(props) {
           <div className="container mt-3">
             <div className="row">
               {details.imageurls.map((image) => (
-                <div className="col-md-4 mt-3">
+                <div className="col-md-4 mt-3" key={image}>
                   <img
                     src={image}
                     alt="Room Detail Image"
@@ -60,3 +62,10 @@ function Room(props) {
 }
 
 export default Room;
+Room.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};

@@ -575,7 +575,7 @@ function BookNow() {
           <div className="bookNow__stage d-none" ref={thirdStage}>
             <div className="bookNow__stage-header">
               <h2>Your Information</h2>
-              <p>We'll use this to confirm your reservation</p>
+              <p>We&apos;ll use this to confirm your reservation</p>
             </div>
 
             {/* <div className="bookNow__form-grid">

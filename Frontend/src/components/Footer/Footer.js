@@ -44,7 +44,7 @@ function Footer() {
             </p>
             <p className="hotel-description">
               Experience unparalleled luxury and impeccable service at North
-              Bihar's premier destination for discerning travelers.
+              Bihar&apos;s premier destination for discerning travelers.
             </p>
             <div className="awards">
               <div className="award-item">★★★★★ Luxury Hotel</div>
