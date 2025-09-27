@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   // baseURL: "https://hotels-reservation-system.herokuapp.com",
-  baseURL: "http://localhost:4000",
+  baseURL: "https://hotel-79fd.onrender.com",
 });
 
 // Attach Authorization header automatically if token exists
