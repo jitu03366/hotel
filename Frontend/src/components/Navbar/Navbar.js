@@ -125,7 +125,7 @@ function Navbar(props) {
           >
             <div className="logo-container">
               <img
-                src="http://hruyan.com/assets/images/logo.png"
+                src="https://img.freepik.com/premium-vector/hotel-logo-design_423075-16.jpg"
                 alt="Website Logo"
                 className="header__navbar__logo"
               />

@@ -31,7 +31,7 @@
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border-bottom: 1px solid var(--glass-border);
-  z-index: 1000; /* Navbar z-index */
+  z-index: 1000;
   transition: var(--transition-slow);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -195,17 +195,17 @@
   width: 80%;
 }
 
-/* ===== MOBILE MENU FIX - Z-INDEX ISSUE ===== */
+/* ===== MOBILE MENU FIXES ===== */
 
-/* Mobile Menu Backdrop */
+/* Mobile Menu Backdrop - FIXED */
 .mobile-menu-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 9999; /* HIGHEST Z-INDEX - Above everything */
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
   opacity: 0;
   visibility: hidden;
   transition: var(--transition-slow);
@@ -216,17 +216,17 @@
   visibility: visible;
 }
 
-/* Mobile Menu Container - FIXED Z-INDEX */
+/* Mobile Menu Container - FIXED */
 .mobile-menu-container {
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: 0;
+  width: 300px;
   height: 100vh;
   background: rgba(10, 10, 10, 0.98) !important;
   backdrop-filter: blur(30px) saturate(200%);
   -webkit-backdrop-filter: blur(30px) saturate(200%);
-  z-index: 10000 !important; /* HIGHEST Z-INDEX - Above backdrop and homepage */
+  z-index: 10000;
   opacity: 0;
   visibility: hidden;
   transform: translateX(100%);
@@ -234,6 +234,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-left: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 .mobile-menu-container.active {
@@ -242,16 +243,18 @@
   transform: translateX(0);
 }
 
-/* Mobile Menu Links */
+/* Mobile Menu Links - FIXED VISIBILITY */
 .mobile-menu-links {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: flex-start;
+  gap: 1.5rem;
   width: 100%;
-  max-width: 320px;
-  padding: 2rem;
+  padding: 2rem 1rem;
+  margin-top: 80px;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
 }
 
 .mobile-menu-item {
@@ -326,7 +329,7 @@
   color: #000 !important;
   border-radius: 50px !important;
   font-weight: 700 !important;
-  margin-top: 1rem !important;
+  margin-top: 2rem !important;
   border: none !important;
   box-shadow: 0 0 20px rgba(255, 153, 0, 0.7) !important;
   padding: 16px 32px !important;
@@ -513,13 +516,13 @@
   }
 }
 
-/* Burger Menu */
+/* Burger Menu - FIXED */
 .burger {
   cursor: pointer;
   display: none;
-  z-index: 10001; /* Above mobile menu */
+  z-index: 10001;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 30px;
   height: 25px;
   background: transparent;
@@ -530,9 +533,9 @@
 
 .burger div {
   width: 100%;
-  height: 2px;
+  height: 3px;
   background: var(--text-primary);
-  border-radius: 2px;
+  border-radius: 3px;
   transition: var(--transition-fast);
   transform-origin: center;
   position: relative;
@@ -542,16 +545,8 @@
   background: var(--text-secondary);
 }
 
-.burger:hover div:nth-child(1) {
-  transform: translateY(-2px);
-}
-
-.burger:hover div:nth-child(3) {
-  transform: translateY(2px);
-}
-
 .burger.active div:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: rotate(45deg) translate(6px, 6px);
   background: var(--text-secondary);
 }
 
@@ -561,7 +556,7 @@
 }
 
 .burger.active div:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -6px);
+  transform: rotate(-45deg) translate(6px, -6px);
   background: var(--text-secondary);
 }
 
@@ -608,15 +603,19 @@
     height: 70px;
   }
 
+  .mobile-menu-container {
+    width: 280px;
+  }
+
   .mobile-nav-link {
     font-size: 17px;
     padding: 14px 20px;
-    background: rgba(255, 255, 255, 0.12) !important;
   }
 
   .mobile-menu-links {
-    max-width: 300px;
+    max-width: 100%;
     padding: 1.5rem;
+    margin-top: 70px;
   }
 
   .brand-text {
@@ -641,43 +640,25 @@
     height: 40px;
   }
 
+  .mobile-menu-container {
+    width: 100%;
+    right: 0;
+  }
+
   .mobile-nav-link {
     font-size: 16px;
     padding: 12px 18px;
-    font-weight: 700;
   }
 
   .mobile-menu-links {
-    max-width: 280px;
     padding: 1rem;
-    gap: 0.8rem;
+    gap: 1rem;
+    margin-top: 65px;
   }
 
   .burger {
-    width: 25px;
-    height: 20px;
-  }
-}
-
-/* Large Desktop Styles (1200px and above) */
-@media screen and (min-width: 1201px) {
-  .header__navbar__links.desktop-menu li a {
-    padding: 12px 20px;
-    font-size: 15px;
-  }
-}
-
-/* Medium Desktop Styles (1001px to 1200px) */
-@media screen and (min-width: 1001px) and (max-width: 1200px) {
-  .header__navbar__links.desktop-menu li a {
-    padding: 10px 15px;
-    font-size: 13px;
-  }
-  
-  .btn-book {
-    padding: 14px 25px !important;
-    font-size: 13px;
-    margin-left: 10px;
+    width: 28px;
+    height: 22px;
   }
 }
 
@@ -694,11 +675,4 @@
 .body-no-scroll {
   overflow: hidden;
   height: 100vh;
-}
-
-/* IMPORTANT: Ensure homepage content has lower z-index */
-/* Add this to your homepage CSS if needed */
-.homepage-content {
-  position: relative;
-  z-index: 1; /* Lower than mobile menu */
 }
