@@ -188,7 +188,7 @@ function CheckRoomsAndRates() {
                         onClick={() => handleBook(room._id)}
                         className="button w-100"
                       >
-                        Book From ${room.rentPerDay}
+                        Book From ₹{room.rentPerDay}
                       </button>
                     </div>
                   </div>

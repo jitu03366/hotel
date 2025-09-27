@@ -208,7 +208,7 @@ function Rooms() {
                           {room.description && (
                             <div className="text-muted small">
                               {room.description.length > 50
-                                ? `${room.description.substring(0, 50)}...`
+                                ? `₹{room.description.substring(0, 50)}...`
                                 : room.description}
                             </div>
                           )}
@@ -223,7 +223,7 @@ function Rooms() {
                         </td>
                         <td>
                           <strong className="text-success">
-                            ${room.rentPerDay}
+                            ₹{room.rentPerDay}
                           </strong>
                           <div className="text-muted small">per night</div>
                         </td>

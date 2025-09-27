@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const upload = require("../Middleware/upload"); // Add this import
 const {
   createRoom,
   getRooms,
@@ -20,7 +21,7 @@ router.get("/:id", getRoomById);
 
 // Protected routes (admin authentication required)
 // Create a new room (admin only)
-router.post("/create", protect, createRoom);
+router.post("/create", protect, upload.array("images", 10), createRoom);
 
 // Get all rooms (admin only)
 router.get("/", protect, getRooms);

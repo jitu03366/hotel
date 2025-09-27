@@ -330,7 +330,7 @@ function UserDetails() {
                   ? "Submitting..."
                   : `Confirm Reservation${
                       selectedRoom
-                        ? ` - $${selectedRoom.rentPerDay * nights}`
+                        ? ` - ₹${selectedRoom.rentPerDay * nights}`
                         : ""
                     }`}
               </button>

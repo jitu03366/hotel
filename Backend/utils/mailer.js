@@ -75,5 +75,3 @@ function formatBookingHtml(booking, title = "Booking Confirmation") {
 }
 
 module.exports = { sendMail, formatBookingHtml };
-
-

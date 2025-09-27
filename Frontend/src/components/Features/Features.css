@@ -36,19 +36,19 @@
 }
 .feature4 {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url(../../style/img/delivery.jpg);
+    url(../../style/img/ACRooms.jpg);
   background-size: cover;
   background-position: center;
 }
 .feature5 {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url(../../style/img/food.jpg);
+    url(../../style/img/ACRooms.jpg);
   background-size: cover;
   background-position: center;
 }
 .feature6 {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url(../../style/img/gym.jpg);
+    url(../../style/img/ACRooms.jpg);
   background-size: cover;
   background-position: center;
 }

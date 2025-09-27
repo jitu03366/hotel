@@ -103,7 +103,7 @@ function Contact() {
               <div className="info-text">
                 +91 9031370046
                 <br />
-                +91 620 225 5555
+                +91 9546024127
               </div>
             </div>
 

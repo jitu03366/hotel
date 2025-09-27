@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./Gallery.css";
 
 // Import sample images (replace with your actual room images)
-import room1 from "../../style/img/bedroom.jpg";
-import room2 from "../../style/img/booking.jpg";
-import room3 from "../../style/img/delivery.jpg";
-import room4 from "../../style/img/food.jpg";
-import room5 from "../../style/img/gym.jpg";
-import banquet1 from "../../style/img/lobby.jpg";
+import room1 from "../../style/img/receptionDesk.jpg";
+import room2 from "../../style/img/bedroom.jpg";
+import room3 from "../../style/img/ACRooms.jpg";
+import room4 from "../../style/img/AcRooms2.jpg";
+import room5 from "../../style/img/colorfulNight.jpg";
+import banquet1 from "../../style/img/nonAcRoom.jpg";
 import banquet2 from "../../style/img/reception.jpg";
 import restaurant1 from "../../style/img/bedroom.jpg";
 

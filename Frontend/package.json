@@ -23,6 +23,7 @@
     "clear-cache": "node clear-eslint-cache.js",
     "lint": "eslint src/ --ext .js,.jsx",
     "lint:fix": "eslint src/ --ext .js,.jsx --fix"
+     
   },
   "browserslist": {
     "production": [
@@ -35,5 +36,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^5.2.0"
   }
 }

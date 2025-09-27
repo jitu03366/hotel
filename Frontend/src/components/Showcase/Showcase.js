@@ -29,7 +29,7 @@ function Showcase(props) {
                 </span>
               </div>
 
-              <h1 className="showcase__hero">HOTE ROYAL BLUE STAR</h1>
+              <h1 className="showcase__hero">HOTEL ROYAL BLUE STAR</h1>
               <p className="showcase__subtitle">
                 Indulge in unparalleled elegance with our exclusive
                 accommodations. For instant reservations and personalized

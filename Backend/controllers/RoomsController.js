@@ -3,47 +3,62 @@ const Room = require("../models/Rooms");
 // Create a new room
 const createRoom = async (req, res) => {
   try {
-    // Extract room data from request body
-    const { name, rentPerDay, type, maxCount, description, amenities } =
-      req.body;
+    const { name, rentPerDay, type, maxCount, description } = req.body;
+    let amenities = [];
+
+    // Parse amenities if present
+    if (req.body.amenities) {
+      try {
+        amenities = JSON.parse(req.body.amenities);
+      } catch (e) {
+        console.error("Error parsing amenities:", e);
+      }
+    }
 
     // Validate required fields
     if (!name || !rentPerDay || !type || !maxCount || !description) {
       return res.status(400).json({
         success: false,
-        message:
-          "Please provide all required fields: name, rentPerDay, type, maxCount, description",
+        message: "Please provide all required fields",
       });
     }
 
-    // Parse amenities if provided as string
-    let amenitiesArray = [];
-    if (amenities) {
-      if (typeof amenities === "string") {
-        amenitiesArray = amenities
-          .split(",")
-          .map((item) => item.trim())
-          .filter((item) => item);
-      } else if (Array.isArray(amenities)) {
-        amenitiesArray = amenities;
-      }
+    // Handle images
+    let images = [];
+
+    // Add uploaded files
+    if (req.files && req.files.length > 0) {
+      images = req.files.map((file) => file.path);
     }
 
-    // Create room data object
-    const roomData = {
+    // Add image URLs if provided
+    if (req.body.imageUrls) {
+      const imageUrls = Array.isArray(req.body.imageUrls)
+        ? req.body.imageUrls
+        : [req.body.imageUrls];
+      images = [...images, ...imageUrls];
+    }
+
+    if (images.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "At least one image is required",
+      });
+    }
+
+    // Create room
+    const room = new Room({
       name: name.trim(),
       rentPerDay: parseFloat(rentPerDay),
       type: type.trim(),
       maxCount: parseInt(maxCount),
       description: description.trim(),
-      amenities: amenitiesArray,
-      images: [], // Will be populated if images are uploaded
-      isAvailable: true,
-    };
+      amenities,
+      images,
+    });
 
-    // Create new room
-    const room = new Room(roomData);
     const savedRoom = await room.save();
+    console.log("Room created with images:", savedRoom.images);
 
     res.status(201).json({
       success: true,

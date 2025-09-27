@@ -33,10 +33,10 @@ function CreateRoom() {
 
   // Room type options based on backend model
   const roomTypes = [
+    "SingleAC",
+    "DoubleAC",
     "Single",
     "Double",
-    "Deluxe",
-    "Suite",
     "Family",
     "Standard",
   ];
@@ -132,7 +132,9 @@ function CreateRoom() {
       newErrors.description = "Description cannot exceed 1000 characters";
     }
 
-    if (formData.images.length > 10) {
+    if (!formData.images || formData.images.length === 0) {
+      newErrors.images = "At least one image is required";
+    } else if (formData.images.length > 10) {
       newErrors.images = "Maximum 10 images allowed";
     }
 
@@ -148,46 +150,56 @@ function CreateRoom() {
     }
 
     setIsSubmitting(true);
-    setMessage({ type: "", text: "" }); // Clear previous messages
+    setMessage({ type: "", text: "" });
 
-    // Prepare data for backend
-    const roomData = {
-      name: formData.name.trim(),
-      rentPerDay: parseFloat(formData.rentPerDay),
-      type: formData.type,
-      maxCount: parseInt(formData.maxCount),
-      images: formData.images,
-      description: formData.description.trim(),
-      amenities: formData.amenities.trim()
-        ? formData.amenities.split(",").map((item) => item.trim())
-        : [],
-    };
+    // Create FormData object to handle file uploads
+    const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name.trim());
+    formDataToSend.append("rentPerDay", formData.rentPerDay);
+    formDataToSend.append("type", formData.type);
+    formDataToSend.append("maxCount", formData.maxCount);
+    formDataToSend.append("description", formData.description.trim());
+
+    // Handle amenities
+    if (formData.amenities) {
+      const amenitiesArray = formData.amenities
+        .split(",")
+        .map((item) => item.trim());
+      formDataToSend.append("amenities", JSON.stringify(amenitiesArray));
+    }
+
+    // Append each image file
+    formData.images.forEach((image, index) => {
+      // If image is a File object
+      if (image instanceof File) {
+        formDataToSend.append("images", image);
+      }
+      // If image is a URL string
+      else if (typeof image === "string") {
+        formDataToSend.append("imageUrls", image);
+      }
+    });
 
     axios
-      .post("/api/rooms/create", roomData)
+      .post("/api/rooms/create", formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((response) => {
         if (response.data.success) {
           setMessage({ type: "success", text: "Room created successfully!" });
           setTimeout(() => {
             history.push("/admin/rooms");
           }, 1500);
-        } else {
-          setMessage({
-            type: "danger",
-            text: response.data.message || "Something went wrong",
-          });
         }
       })
       .catch((err) => {
         console.error("Error creating room:", err);
-        if (err.response?.data?.message) {
-          setMessage({ type: "danger", text: err.response.data.message });
-        } else {
-          setMessage({
-            type: "danger",
-            text: "Something went wrong while creating the room",
-          });
-        }
+        setMessage({
+          type: "danger",
+          text: err.response?.data?.message || "Failed to create room",
+        });
       })
       .finally(() => {
         setIsSubmitting(false);
@@ -277,7 +289,7 @@ function CreateRoom() {
                       htmlFor="rentPerDay"
                       className="form-label required-field"
                     >
-                      Rent Per Day ($)
+                      Rent Per Day (INR)
                     </label>
                     <input
                       type="number"
@@ -355,13 +367,16 @@ function CreateRoom() {
 
                 <div className="col-md-6">
                   <div className="mb-3">
-                    <label className="form-label">Room Images</label>
+                    <label className="form-label required-field">
+                      Room Images
+                    </label>
                     <ImageUpload
                       images={formData.images}
                       onImagesChange={handleImagesChange}
                       maxImages={10}
                       disabled={isSubmitting}
                       className={errors.images ? "error" : ""}
+                      required={true} // Add this prop
                     />
                     {errors.images && (
                       <div className="invalid-feedback d-block">
@@ -369,7 +384,7 @@ function CreateRoom() {
                       </div>
                     )}
                     <div className="form-text">
-                      Upload up to 10 images for your room (optional)
+                      Upload at least one image (maximum 10 images allowed)
                     </div>
                   </div>
 

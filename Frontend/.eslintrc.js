@@ -2,40 +2,29 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    es2021: true,
     node: true,
-    jest: true,
+    es6: true,
   },
-  // Use CRA's default ESLint config; avoid extending to prevent plugin conflicts
+  extends: [
+    "react-app",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+  ],
   parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: "module",
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 12,
-    sourceType: "module",
-  },
-  // Do not declare plugins explicitly; provided by react-app config
-  rules: {
-    "no-unused-vars": "warn",
-    "no-console": "warn",
-    "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "no-undef": "off",
-    "no-redeclare": "off",
   },
   settings: {
     react: {
       version: "detect",
     },
   },
-  overrides: [
-    {
-      files: ["**/*.test.js", "**/*.test.jsx", "**/*.spec.js", "**/*.spec.jsx"],
-      env: {
-        jest: true,
-      },
-    },
-  ],
+  plugins: ["react", "react-hooks"],
+  rules: {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+  },
 };

@@ -17,7 +17,14 @@ const roomSchema = new mongoose.Schema({
     required: [true, "Room type is required"],
     trim: true,
     enum: {
-      values: ["Single", "Double", "Deluxe", "Suite", "Family", "Standard"],
+      values: [
+        "SingleAC",
+        "DoubleAC",
+        "Single",
+        "Double",
+        "Family",
+        "Standard",
+      ],
       message: "Please select a valid room type",
     },
   },

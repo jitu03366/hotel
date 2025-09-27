@@ -37,6 +37,16 @@ app.use("/api/admin", AdminRoute);
 app.use("/api/upload", uploadRoute);
 app.use("/api/payment", paymentRoutes);
 
+// app.use(
+//   "/api/upload",
+//   express.Router().post("/", uploadRoute.single("image"), (req, res) => {
+//     if (!req.file) {
+//       return res.status(400).json({ error: "No file uploaded" });
+//     }
+//     res.json({ url: req.file.path });
+//   })
+// );
+
 // Health check endpoint
 app.get("/api/health", (req, res) => {
   res.status(200).json({

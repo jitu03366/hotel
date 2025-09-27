@@ -1,4 +1,4 @@
-/* Showcase.css - Enhanced Luxury Style */
+/* Showcase.css - Fixed Z-Index Issues */
 .showcase {
   width: 100%;
   min-height: 100vh;
@@ -17,6 +17,7 @@
   align-items: center;
   position: relative;
   overflow: hidden;
+  z-index: 1; /* LOWER Z-INDEX - Fixed: was not set */
 }
 
 .showcase::before {
@@ -32,7 +33,7 @@
     rgba(118, 75, 162, 0.25) 50%,
     rgba(0, 0, 0, 0.4) 100%
   );
-  z-index: 1;
+  z-index: 1; /* Keep this as is */
 }
 
 .showcase::after {
@@ -44,7 +45,7 @@
   height: 200%;
   background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.08) 50%, transparent 70%);
   animation: shimmer 10s ease-in-out infinite;
-  z-index: 1;
+  z-index: 1; /* Keep this as is */
 }
 
 @keyframes shimmer {
@@ -58,7 +59,7 @@
 
 .showcase__content {
   position: relative;
-  z-index: 2;
+  z-index: 2; /* This is fine - it's relative to showcase */
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
@@ -216,7 +217,7 @@
   to { opacity: 1; }
 }
 
-/* Enhanced floating elements */
+/* Enhanced floating elements - FIXED Z-INDEX */
 .showcase__floating-elements {
   position: absolute;
   top: 0;
@@ -224,7 +225,7 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 1; /* LOWER Z-INDEX - Fixed */
 }
 
 .showcase__floating-element {
@@ -232,6 +233,7 @@
   border-radius: 50%;
   animation: float 8s ease-in-out infinite;
   background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+  z-index: 1; /* LOWER Z-INDEX - Fixed */
 }
 
 .showcase__floating-element--1 {
@@ -313,6 +315,7 @@
   .showcase {
     min-height: 80vh;
     background-attachment: scroll;
+    z-index: 1; /* Ensure it stays low on mobile */
   }
 
   .showcase__hero {
@@ -362,5 +365,17 @@
 
   .showcase__badge-text {
     font-size: 0.7rem;
+  }
+}
+
+/* IMPORTANT: Add this to ensure mobile menu appears above showcase */
+@media (max-width: 1000px) {
+  .showcase {
+    z-index: 1 !important; /* Force lower z-index on mobile */
+  }
+  
+  .showcase__floating-elements,
+  .showcase__floating-element {
+    z-index: 1 !important; /* Force lower z-index on mobile */
   }
 }
