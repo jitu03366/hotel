@@ -17,6 +17,7 @@ function Navbar(props) {
 
   function toggleNav() {
     const newToggleState = !state.navToggled;
+    console.log("ToggleNav called - newToggleState:", newToggleState);
     setIsMenuOpen(newToggleState);
 
     dispatch({
@@ -30,10 +31,18 @@ function Navbar(props) {
       if (backdrop.current) {
         backdrop.current.classList.add("active");
       }
+      // Ensure mobile menu is visible when opened
+      if (mobileMenu.current) {
+        mobileMenu.current.classList.add("active");
+      }
     } else {
       document.body.classList.remove("body-no-scroll");
       if (backdrop.current) {
         backdrop.current.classList.remove("active");
+      }
+      // Hide mobile menu when closed
+      if (mobileMenu.current) {
+        mobileMenu.current.classList.remove("active");
       }
     }
   }
@@ -55,12 +64,23 @@ function Navbar(props) {
   }, []);
 
   useEffect(() => {
+    console.log("Navbar useEffect - navToggled:", state.navToggled);
     if (state.navToggled === true) {
-      mobileMenu.current.classList.add("active");
-      burger.current.classList.add("active");
+      if (mobileMenu.current) {
+        mobileMenu.current.classList.add("active");
+        console.log("Added active class to mobile menu");
+      }
+      if (burger.current) {
+        burger.current.classList.add("active");
+      }
     } else if (state.navToggled === false) {
-      mobileMenu.current.classList.remove("active");
-      burger.current.classList.remove("active");
+      if (mobileMenu.current) {
+        mobileMenu.current.classList.remove("active");
+        console.log("Removed active class from mobile menu");
+      }
+      if (burger.current) {
+        burger.current.classList.remove("active");
+      }
     }
   }, [state.navToggled]);
 
@@ -111,6 +131,105 @@ function Navbar(props) {
         ref={backdrop}
         onClick={handleBackdropClick}
       ></div>
+
+      {/* COMPLETELY SEPARATE MOBILE MENU - GUARANTEED TO WORK */}
+      {state.navToggled && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0, 0, 0, 0.8)',
+            zIndex: 99999,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center'
+          }}
+          onClick={toggleNav}
+        >
+          <div
+            style={{
+              width: '300px',
+              height: '100%',
+              background: 'rgba(10, 10, 10, 0.98)',
+              borderLeft: '1px solid rgba(212, 175, 55, 0.3)',
+              padding: '2rem 1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '1.5rem'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.name === "home" ? "/" : ""}
+                onClick={() => handleNavClick(item.scroll, item.name)}
+                style={{
+                  display: 'block',
+                  padding: '16px 24px',
+                  color: '#ffffff',
+                  textDecoration: 'none',
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  textAlign: 'center',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '2px solid rgba(212, 175, 55, 0.3)',
+                  borderRadius: '12px',
+                  width: '100%',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = 'rgba(212, 175, 55, 0.2)';
+                  e.target.style.borderColor = 'rgba(212, 175, 55, 0.6)';
+                  e.target.style.color = '#ffd700';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+                  e.target.style.borderColor = 'rgba(212, 175, 55, 0.3)';
+                  e.target.style.color = '#ffffff';
+                }}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link
+              to=""
+              onClick={() => handleNavClick(props.scrollToBookNow, "book")}
+              style={{
+                display: 'block',
+                padding: '16px 32px',
+                color: '#000',
+                textDecoration: 'none',
+                fontSize: '18px',
+                fontWeight: '700',
+                textAlign: 'center',
+                background: 'linear-gradient(135deg, #ff9900 0%, #ffcc00 100%)',
+                border: 'none',
+                borderRadius: '50px',
+                width: '100%',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 0 20px rgba(255, 153, 0, 0.7)',
+                marginTop: '1rem'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-3px) scale(1.05)';
+                e.target.style.boxShadow = '0 10px 25px rgba(255, 153, 0, 0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0) scale(1)';
+                e.target.style.boxShadow = '0 0 20px rgba(255, 153, 0, 0.7)';
+              }}
+            >
+              Book Now
+            </Link>
+          </div>
+        </div>
+      )}
 
       <div
         className={`header__navbar ${scrolled ? "scrolled" : ""}`}
@@ -170,39 +289,140 @@ function Navbar(props) {
               </li>
             </ul>
 
-            {/* Mobile Menu - Hidden by default, shown when toggled */}
-            <div className="mobile-menu-container" ref={mobileMenu}>
-              <ul className="mobile-menu-links">
-                {navItems.map((item) => (
-                  <li key={item.name} className="mobile-menu-item">
+            {/* DEBUG: Force show mobile menu for testing */}
+            {/* <div style={{ position: 'fixed', top: '10px', left: '10px', zIndex: 99999, background: 'red', color: 'white', padding: '10px' }}>
+              Nav State: {state.navToggled ? 'OPEN' : 'CLOSED'}
+              <button 
+                onClick={() => {
+                  console.log("Force toggle clicked");
+                  dispatch({
+                    type: actionTypes.TOGGLE_NAV,
+                    navToggled: !state.navToggled,
+                  });
+                }}
+                style={{ marginLeft: '10px', padding: '5px', background: 'white', color: 'black' }}
+              >
+                Force Toggle
+              </button>
+            </div> */}
+
+            {/* Mobile Menu Backdrop */}
+            {state.navToggled && (
+              <div 
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'rgba(0, 0, 0, 0.8)',
+                  zIndex: 9999
+                }}
+                onClick={toggleNav}
+              />
+            )}
+
+            {/* Mobile Menu - Simplified Version */}
+            {state.navToggled && (
+              <div 
+                className="mobile-menu-container"
+                ref={mobileMenu}
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  right: 0,
+                  width: '300px',
+                  height: '100vh',
+                  background: 'rgba(10, 10, 10, 0.98)',
+                  zIndex: 10000,
+                  display: 'flex !important',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '2rem 1rem',
+                  borderLeft: '1px solid rgba(212, 175, 55, 0.3)',
+                  backdropFilter: 'blur(30px)',
+                  WebkitBackdropFilter: 'blur(30px)',
+                  visibility: 'visible !important',
+                  opacity: '1 !important'
+                }}
+              >
+                <ul style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1.5rem',
+                  width: '100%',
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: 0
+                }}>
+                  {navItems.map((item) => (
+                    <li key={item.name} style={{ width: '100%' }}>
+                      <Link
+                        to={item.name === "home" ? "/" : ""}
+                        onClick={() => handleNavClick(item.scroll, item.name)}
+                        style={{
+                          display: 'block',
+                          padding: '16px 24px',
+                          color: '#ffffff',
+                          textDecoration: 'none',
+                          fontSize: '18px',
+                          fontWeight: '600',
+                          textAlign: 'center',
+                          background: 'rgba(255, 255, 255, 0.1)',
+                          border: '2px solid rgba(212, 175, 55, 0.3)',
+                          borderRadius: '12px',
+                          transition: 'all 0.3s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = 'rgba(212, 175, 55, 0.2)';
+                          e.target.style.borderColor = 'rgba(212, 175, 55, 0.6)';
+                          e.target.style.color = '#ffd700';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+                          e.target.style.borderColor = 'rgba(212, 175, 55, 0.3)';
+                          e.target.style.color = '#ffffff';
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                  {/* Book Now Button for Mobile */}
+                  <li style={{ width: '100%', marginTop: '1rem' }}>
                     <Link
-                      to={item.name === "home" ? "/" : ""}
-                      className={`mobile-nav-link ${
-                        activeItem === item.name ? "active" : ""
-                      }`}
-                      onClick={() => handleNavClick(item.scroll, item.name)}
+                      to=""
+                      onClick={() => handleNavClick(props.scrollToBookNow, "book")}
+                      style={{
+                        display: 'block',
+                        padding: '16px 32px',
+                        color: '#000',
+                        textDecoration: 'none',
+                        fontSize: '18px',
+                        fontWeight: '700',
+                        textAlign: 'center',
+                        background: 'linear-gradient(135deg, #ff9900 0%, #ffcc00 100%)',
+                        border: 'none',
+                        borderRadius: '50px',
+                        transition: 'all 0.3s ease',
+                        boxShadow: '0 0 20px rgba(255, 153, 0, 0.7)'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.transform = 'translateY(-3px) scale(1.05)';
+                        e.target.style.boxShadow = '0 10px 25px rgba(255, 153, 0, 0.6)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.transform = 'translateY(0) scale(1)';
+                        e.target.style.boxShadow = '0 0 20px rgba(255, 153, 0, 0.7)';
+                      }}
                     >
-                      <span className="mobile-nav-text">{item.label}</span>
-                      <div className="mobile-nav-underline"></div>
+                      Book Now
                     </Link>
                   </li>
-                ))}
-                {/* Book Now Button for Mobile */}
-                <li className="mobile-menu-item">
-                  <Link
-                    to=""
-                    className="mobile-nav-link button mobile-btn-book"
-                    onClick={() =>
-                      handleNavClick(props.scrollToBookNow, "book")
-                    }
-                  >
-                    <span className="mobile-btn-text">Book Now</span>
-                    <div className="btn-shine"></div>
-                    <div className="pulse-effect"></div>
-                  </Link>
-                </li>
-              </ul>
-            </div>
+                </ul>
+              </div>
+            )}
 
             {/* Mobile Menu Button */}
             <button
