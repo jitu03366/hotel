@@ -10,7 +10,7 @@ import { useStateValue } from "../../../context/StateProvider";
 import { actionTypes } from "../../../context/reducer";
 import "./CreateRoom.css";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 function EditRoom(props) {
   const [state, dispatch] = useStateValue();
